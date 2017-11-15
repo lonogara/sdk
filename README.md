@@ -1,8 +1,8 @@
 # ligure tool
 
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-[![Build Status]()]()
-[![Coverage Status]()]()
+[![CircleCI](https://img.shields.io/circleci/project/github/kthjm/ligure-tool.svg?style=flat-square)](https://circleci.com/gh/kthjm/ligure-tool)
+[![Codecov](https://img.shields.io/codecov/c/github/kthjm/ligure-tool.svg?style=flat-square)](https://codecov.io/gh/kthjm/ligure-tool)
 
 [`ligure-tool/build`](https://github.com/kthjm/ligure-tool/tree/master/build)
 
