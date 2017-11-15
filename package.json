@@ -29,7 +29,7 @@
     "test:supplier": "yarn nycha ./supplier/test",
     "test:toreact": "yarn nycha ./toreact/test",
     "test": "yarn nycha ./build/test ./button/test ./preloader/test ./supplier/test ./toreact/test",
-    "codecov": "nyc report --reporter=text-lcov | codecov",
+    "codecov": "nyc report --reporter=lcov | codecov --disable=gcov",
     "//prebuild": "yarn test",
     "compile": "cross-env NODE_ENV=build babel",
     "build:build": "yarn compile ./build/src -d ./build/lib",
