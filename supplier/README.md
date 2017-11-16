@@ -1,6 +1,6 @@
 # supplier
 
-be extended to define NMS class
+be extended to define Factory/class
 
 ## condition
 

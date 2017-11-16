@@ -24,7 +24,7 @@ describe(`supplier:jsonp`, () => {
         assert.ok(deleteGlobalName.calledOnce)
 
         const script = appendScript.args[0][0]
-        assert.ok(script.src.includes(url))
+        assert.ok(script.src.includes(`${url}?callback=jsonp_callback_`))
 
         assert.ok(parseError)
       })
@@ -32,11 +32,8 @@ describe(`supplier:jsonp`, () => {
   })
 
   it(`script.onerror() => fail(undefined)`, () => {
-    const script = {
-      execOnError() {
-        this.onerror()
-      }
-    }
+    const script = {}
+
     const stubAndSpies = {
       createScript: sinon.stub().returns(script),
       appendScript: sinon.spy(),
@@ -61,7 +58,7 @@ describe(`supplier:jsonp`, () => {
             resolve()
           })
 
-          script.execOnError()
+          script.onerror()
         })
     )
   })

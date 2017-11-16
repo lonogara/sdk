@@ -7,9 +7,9 @@ const generator = modules.default
 
 describe(`supplier:generator`, () => {
   it(`total isn't pass via iterator.next()`, () => {
-    const totals = ['0', true, false, undefined, null, {}, [], () => {}]
+    const invalidTotals = ['0', true, false, undefined, null, {}, [], () => {}]
 
-    totals.forEach(total => {
+    invalidTotals.forEach(total => {
       const createSrc = sinon.spy()
       const jsonp = sinon.spy()
 
@@ -17,10 +17,12 @@ describe(`supplier:generator`, () => {
         _jsonp2: { default: jsonp }
       })(() => {
         const iterator = generator(createSrc)
-        iterator.next() // firstJsonp
 
-        assert.ok(createSrc.calledOnce)
-        assert.ok(jsonp.calledOnce)
+        // firstJsonp
+        iterator.next()
+        assert.deepStrictEqual(createSrc.callCount, 1)
+        assert.deepStrictEqual(jsonp.callCount, 1)
+
         assert.throws(
           () => iterator.next(total),
           /total is required as "number"/
@@ -38,13 +40,16 @@ describe(`supplier:generator`, () => {
       _jsonp2: { default: jsonp }
     })(() => {
       const iterator = generator(createSrc)
-      iterator.next() // firstJsonp
 
-      assert.ok(createSrc.calledOnce)
-      assert.ok(jsonp.calledOnce)
+      // firstJsonp
+      iterator.next()
+      assert.deepStrictEqual(createSrc.callCount, 1)
+      assert.deepStrictEqual(jsonp.callCount, 1)
 
-      const resultOfPassTotal = iterator.next(total)
-      assert.ok(resultOfPassTotal.done)
+      // pass total
+      assert.deepStrictEqual(iterator.next(total).done, true)
+      assert.deepStrictEqual(createSrc.callCount, 1)
+      assert.deepStrictEqual(jsonp.callCount, 1)
     })
   })
 
@@ -57,17 +62,26 @@ describe(`supplier:generator`, () => {
       _jsonp2: { default: jsonp }
     })(() => {
       const iterator = generator(createSrc)
-      iterator.next() // firstJsonp
 
-      assert.ok(createSrc.calledOnce)
-      assert.ok(jsonp.calledOnce)
-
-      const resultOfPassTotal = iterator.next(total)
-      assert.ok(!resultOfPassTotal.done)
-
+      // firstJsonp
       iterator.next()
-      const resultOfReturn = iterator.next()
-      assert.ok(resultOfReturn.done)
+      assert.deepStrictEqual(createSrc.callCount, 1)
+      assert.deepStrictEqual(jsonp.callCount, 1)
+
+      // pass total
+      assert.deepStrictEqual(iterator.next(total).done, false)
+      assert.deepStrictEqual(createSrc.callCount, 1)
+      assert.deepStrictEqual(jsonp.callCount, 1)
+
+      // offset === 20
+      assert.deepStrictEqual(iterator.next().done, false)
+      assert.deepStrictEqual(createSrc.callCount, 2)
+      assert.deepStrictEqual(jsonp.callCount, 2)
+
+      // offset === 40
+      assert.deepStrictEqual(iterator.next().done, true)
+      assert.deepStrictEqual(createSrc.callCount, 3)
+      assert.deepStrictEqual(jsonp.callCount, 3)
     })
   })
 })

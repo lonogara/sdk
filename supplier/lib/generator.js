@@ -8,7 +8,7 @@ var _regenerator = require('babel-runtime/regenerator')
 
 var _regenerator2 = _interopRequireDefault(_regenerator)
 
-exports.default = g
+exports.default = generator
 
 var _jsonp = require('./jsonp.js')
 
@@ -18,23 +18,23 @@ function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj }
 }
 
-var _marked = /*#__PURE__*/ _regenerator2.default.mark(g)
+var _marked = /*#__PURE__*/ _regenerator2.default.mark(generator)
 
 var isThrow = function isThrow(target) {
   return typeof target !== 'number'
 }
 var message = 'total is required as "number"'
 
-var isReturn = function isReturn(offset, total) {
-  var nowMaxOffset = offset + 19
+var isReturn = function isReturn(total, offset) {
   var lastOffset = total - 1
-  return nowMaxOffset >= lastOffset
+  var acquiredOffset = offset + 19
+  return acquiredOffset >= lastOffset
 }
 
-function g(createSrc) {
+function generator(createSrc) {
   var offset, firstSrc, total, src
   return _regenerator2.default.wrap(
-    function g$(_context) {
+    function generator$(_context) {
       while (1) {
         switch ((_context.prev = _context.next)) {
           case 0:
@@ -54,7 +54,7 @@ function g(createSrc) {
             throw new Error(message)
 
           case 7:
-            if (!isReturn(offset, total)) {
+            if (!isReturn(total, offset)) {
               _context.next = 9
               break
             }
@@ -66,12 +66,14 @@ function g(createSrc) {
             return
 
           case 11:
-            offset += 20
+            if (!true) {
+              _context.next = 19
+              break
+            }
 
-          case 12:
-            src = createSrc(offset)
+            src = createSrc((offset += 20))
 
-            if (!isReturn(offset, total)) {
+            if (!isReturn(total, offset)) {
               _context.next = 15
               break
             }
@@ -83,13 +85,8 @@ function g(createSrc) {
             return (0, _jsonp2.default)(src)
 
           case 17:
-            offset += 20
-
-          case 18:
-            if (true) {
-              _context.next = 12
-              break
-            }
+            _context.next = 11
+            break
 
           case 19:
           case 'end':

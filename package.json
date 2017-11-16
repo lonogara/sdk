@@ -22,7 +22,7 @@
   },
   "scripts": {
     "//pretest": "flow",
-    "nycha": "cross-env NODE_ENV=test nyc --clean mocha --recursive",
+    "nycha": "cross-env NODE_ENV=test nyc mocha --recursive",
     "test:build": "yarn nycha ./build/test",
     "test:button": "yarn nycha ./button/test",
     "test:preloader": "yarn nycha ./preloader/test",
