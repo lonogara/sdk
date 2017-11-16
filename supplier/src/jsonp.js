@@ -4,6 +4,11 @@ const createGlobalName = () => {
   return window[name] ? createGlobalName() : name
 }
 
+const createSrc = (src, globalName) =>
+  src.includes('?')
+    ? `${src}&callback=${globalName}`
+    : `${src}?callback=${globalName}`
+
 const createScript = src => {
   const script = document.createElement('script')
   script.src = src
@@ -35,26 +40,27 @@ const deleteGlobalName = globalName => {
 
 export default (src, limit = 2000) =>
   new Promise((resolve, reject) => {
+    // create
     const globalName = createGlobalName()
-    const script = createScript(`${src}&callback=${globalName}`)
+    const script = createScript(createSrc(src, globalName))
     const { succeed, fail } = createClean({
-      script,
-      globalName,
       resolve,
-      reject
+      reject,
+      globalName,
+      script
     })
 
+    // prepare three exit
     const timeout = setTimeout(() => fail(true), limit)
-
     script.onerror = () => {
       clearTimeout(timeout)
       fail()
     }
-
     window[globalName] = res => {
       clearTimeout(timeout)
       succeed(res)
     }
 
+    // action
     appendScript(script)
   })

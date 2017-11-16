@@ -1,47 +1,56 @@
-import jsonp from '../jsonp.js'
+import generator from '../generator.js'
+const { assign, entries } = Object
 
-const src = (account, query) =>
-  `https://api.tumblr.com/v2/blog/${account}.tumblr.com/posts?${qs(query)}`
-
-const qs = query =>
-  Object.entries(query)
-    .map(([key, value]) => `${key}=${value}`)
-    .join('&')
+const throwInvalid = (target, targetName) => {
+  if (!target) {
+    throw new Error(`supplier.Tumblr require ${targetName}`)
+  }
+  if (typeof target !== 'string') {
+    throw new TypeError(
+      `supplier.Tumblr argument ${targetName} must be "string"`
+    )
+  }
+}
 
 export default class Tumblr {
   constructor(account, api_key, opts) {
-    this.incomplete = true
-    this.iterator = generate(account, api_key, opts)
+    throwInvalid(account, 'account')
+    throwInvalid(api_key, 'api_key')
+    this._iterator = generator(HoCreateSrc(account, api_key, opts))
+    this._complete = false
+  }
+
+  _init(total_posts) {
+    this._complete = true
+    return this._iterator.next(total_posts).done
   }
 
   supply() {
-    const result = this.iterator.next()
-    return result.value().then(res => ({
-      res,
-      done: this.incomplete ? this._full(res.total_posts) : result.done
-    }))
-  }
+    const result = this._iterator.next()
+    return result.value.then(({ response }) => {
+      const done = this._complete
+        ? result.done
+        : this._init(response.total_posts)
 
-  _full(total_posts) {
-    this.incomplete = false
-    return this.iterator.next(total_posts).done
+      return { response, done }
+    })
   }
 }
 
-function* generate(account, api_key, opts) {
-  const query = Object.assign(opts || {}, { api_key, offset: 0 })
+const HoCreateSrc = (account, api_key, opts) => {
+  const query = assign({}, opts, { api_key })
+  return createSrc
 
-  const total = yield jsonp(src(account, query))
-  if (total < 20) return total
-  yield total
-  query.offset += 20
-
-  while (query.offset < total) {
-    if (query.offset + 20 > total - 1) {
-      return jsonp(src(account, query))
-    } else {
-      yield jsonp(src(account, query))
-    }
-    query.offset += 20
+  function createSrc(offset) {
+    const querystring = queryjoin(assign({}, query, { offset }))
+    return src(account, querystring)
   }
 }
+
+const queryjoin = query =>
+  entries(query)
+    .map(([key, value]) => `${key}=${value}`)
+    .join('&')
+
+const src = (account, querystring) =>
+  `https://api.tumblr.com/v2/blog/${account}.tumblr.com/posts?${querystring}`

@@ -18,6 +18,12 @@ var createGlobalName = function createGlobalName() {
   return window[name] ? createGlobalName() : name
 }
 
+var createSrc = function createSrc(src, globalName) {
+  return src.includes('?')
+    ? src + '&callback=' + globalName
+    : src + '?callback=' + globalName
+}
+
 var createScript = function createScript(src) {
   var script = document.createElement('script')
   script.src = src
@@ -60,32 +66,34 @@ exports.default = function(src) {
   var limit =
     arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2000
   return new _promise2.default(function(resolve, reject) {
+    // create
     var globalName = createGlobalName()
-    var script = createScript(src + '&callback=' + globalName)
+    var script = createScript(createSrc(src, globalName))
 
     var _createClean = createClean({
-        script: script,
-        globalName: globalName,
         resolve: resolve,
-        reject: reject
+        reject: reject,
+        globalName: globalName,
+        script: script
       }),
       succeed = _createClean.succeed,
       fail = _createClean.fail
 
+    // prepare three exit
+
     var timeout = setTimeout(function() {
       return fail(true)
     }, limit)
-
     script.onerror = function() {
       clearTimeout(timeout)
       fail()
     }
-
     window[globalName] = function(res) {
       clearTimeout(timeout)
       succeed(res)
     }
 
+    // action
     appendScript(script)
   })
 }

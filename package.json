@@ -22,17 +22,14 @@
   },
   "scripts": {
     "//pretest": "flow",
-    "nycha": "cross-env NODE_ENV=test nyc --clean mocha",
+    "nycha": "cross-env NODE_ENV=test nyc --clean mocha --recursive",
     "test:build": "yarn nycha ./build/test",
     "test:button": "yarn nycha ./button/test",
     "test:preloader": "yarn nycha ./preloader/test",
     "test:supplier": "yarn nycha ./supplier/test",
     "test:toreact": "yarn nycha ./toreact/test",
     "test": "yarn nycha ./build/test ./button/test ./preloader/test ./supplier/test ./toreact/test",
-    "report": "nyc report --reporter=lcov",
-    "codecov": "codecov",
-    "coverage": "run-s report codecov",
-    "//prebuild": "yarn test",
+    "prebuild": "yarn test",
     "compile": "cross-env NODE_ENV=build babel",
     "build:build": "yarn compile ./build/src -d ./build/lib",
     "build:button": "yarn compile ./button/src -d ./button/lib",
@@ -42,6 +39,9 @@
     "build": "run-s build:build build:button build:preloader build:supplier build:toreact",
     "postbuild": "yarn format",
     "format": "prettier --write **/*.js",
+    "report": "nyc report --reporter=lcov",
+    "codecov": "codecov",
+    "coverage": "run-s report codecov",
     "node": "cross-env NODE_ENV=play node -r babel-register"
   },
   "devDependencies": {
@@ -85,6 +85,13 @@
       "babel-register",
       "jsdom-global/register"
     ],
+    "include": [
+      "build/src",
+      "button/src",
+      "preloader/src",
+      "supplier/src",
+      "toreact/src"
+    ],
     "sourceMap": false,
     "instrument": false
   },
@@ -116,7 +123,7 @@
             "env",
             {
               "targets": {
-                "node": "current"
+                "browsers": ["last 2 versions"]
               }
             }
           ],
@@ -125,6 +132,7 @@
         ],
         "plugins": [
           "istanbul",
+          "transform-runtime",
           [
             "espower",
             {

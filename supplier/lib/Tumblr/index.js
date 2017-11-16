@@ -4,13 +4,9 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 })
 
-var _regenerator = require('babel-runtime/regenerator')
+var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray')
 
-var _regenerator2 = _interopRequireDefault(_regenerator)
-
-var _assign = require('babel-runtime/core-js/object/assign')
-
-var _assign2 = _interopRequireDefault(_assign)
+var _slicedToArray3 = _interopRequireDefault(_slicedToArray2)
 
 var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck')
 
@@ -20,73 +16,71 @@ var _createClass2 = require('babel-runtime/helpers/createClass')
 
 var _createClass3 = _interopRequireDefault(_createClass2)
 
-var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray')
-
-var _slicedToArray3 = _interopRequireDefault(_slicedToArray2)
-
 var _entries = require('babel-runtime/core-js/object/entries')
 
 var _entries2 = _interopRequireDefault(_entries)
 
-var _jsonp = require('../jsonp.js')
+var _assign = require('babel-runtime/core-js/object/assign')
 
-var _jsonp2 = _interopRequireDefault(_jsonp)
+var _assign2 = _interopRequireDefault(_assign)
+
+var _generator = require('../generator.js')
+
+var _generator2 = _interopRequireDefault(_generator)
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj }
 }
 
-var _marked = /*#__PURE__*/ _regenerator2.default.mark(generate)
+var assign = _assign2.default,
+  entries = _entries2.default
 
-var src = function src(account, query) {
-  return (
-    'https://api.tumblr.com/v2/blog/' +
-    account +
-    '.tumblr.com/posts?' +
-    qs(query)
-  )
-}
-
-var qs = function qs(query) {
-  return (0, _entries2.default)(query)
-    .map(function(_ref) {
-      var _ref2 = (0, _slicedToArray3.default)(_ref, 2),
-        key = _ref2[0],
-        value = _ref2[1]
-
-      return key + '=' + value
-    })
-    .join('&')
+var throwInvalid = function throwInvalid(target, targetName) {
+  if (!target) {
+    throw new Error('supplier.Tumblr require ' + targetName)
+  }
+  if (typeof target !== 'string') {
+    throw new TypeError(
+      'supplier.Tumblr argument ' + targetName + ' must be "string"'
+    )
+  }
 }
 
 var Tumblr = (function() {
   function Tumblr(account, api_key, opts) {
     ;(0, _classCallCheck3.default)(this, Tumblr)
 
-    this.incomplete = true
-    this.iterator = generate(account, api_key, opts)
+    throwInvalid(account, 'account')
+    throwInvalid(api_key, 'api_key')
+    this._iterator = (0, _generator2.default)(
+      HoCreateSrc(account, api_key, opts)
+    )
+    this._complete = false
   }
 
   ;(0, _createClass3.default)(Tumblr, [
+    {
+      key: '_init',
+      value: function _init(total_posts) {
+        this._complete = true
+        return this._iterator.next(total_posts).done
+      }
+    },
     {
       key: 'supply',
       value: function supply() {
         var _this = this
 
-        var result = this.iterator.next()
-        return result.value().then(function(res) {
-          return {
-            res: res,
-            done: _this.incomplete ? _this._full(res.total_posts) : result.done
-          }
+        var result = this._iterator.next()
+        return result.value.then(function(_ref) {
+          var response = _ref.response
+
+          var done = _this._complete
+            ? result.done
+            : _this._init(response.total_posts)
+
+          return { response: response, done: done }
         })
-      }
-    },
-    {
-      key: '_full',
-      value: function _full(total_posts) {
-        this.incomplete = false
-        return this.iterator.next(total_posts).done
       }
     }
   ])
@@ -95,69 +89,33 @@ var Tumblr = (function() {
 
 exports.default = Tumblr
 
-function generate(account, api_key, opts) {
-  var query, total
-  return _regenerator2.default.wrap(
-    function generate$(_context) {
-      while (1) {
-        switch ((_context.prev = _context.next)) {
-          case 0:
-            query = (0, _assign2.default)(opts || {}, {
-              api_key: api_key,
-              offset: 0
-            })
-            _context.next = 3
-            return (0, _jsonp2.default)(src(account, query))
+var HoCreateSrc = function HoCreateSrc(account, api_key, opts) {
+  var query = assign({}, opts, { api_key: api_key })
+  return createSrc
 
-          case 3:
-            total = _context.sent
+  function createSrc(offset) {
+    var querystring = queryjoin(assign({}, query, { offset: offset }))
+    return src(account, querystring)
+  }
+}
 
-            if (!(total < 20)) {
-              _context.next = 6
-              break
-            }
+var queryjoin = function queryjoin(query) {
+  return entries(query)
+    .map(function(_ref2) {
+      var _ref3 = (0, _slicedToArray3.default)(_ref2, 2),
+        key = _ref3[0],
+        value = _ref3[1]
 
-            return _context.abrupt('return', total)
+      return key + '=' + value
+    })
+    .join('&')
+}
 
-          case 6:
-            _context.next = 8
-            return total
-
-          case 8:
-            query.offset += 20
-
-          case 9:
-            if (!(query.offset < total)) {
-              _context.next = 19
-              break
-            }
-
-            if (!(query.offset + 20 > total - 1)) {
-              _context.next = 14
-              break
-            }
-
-            return _context.abrupt(
-              'return',
-              (0, _jsonp2.default)(src(account, query))
-            )
-
-          case 14:
-            _context.next = 16
-            return (0, _jsonp2.default)(src(account, query))
-
-          case 16:
-            query.offset += 20
-            _context.next = 9
-            break
-
-          case 19:
-          case 'end':
-            return _context.stop()
-        }
-      }
-    },
-    _marked,
-    this
+var src = function src(account, querystring) {
+  return (
+    'https://api.tumblr.com/v2/blog/' +
+    account +
+    '.tumblr.com/posts?' +
+    querystring
   )
 }
