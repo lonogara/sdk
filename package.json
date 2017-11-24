@@ -5,11 +5,51 @@
   "repository": "kthjm/ligure-tool",
   "author": "kthjm <toxictoxer@gmail.com>",
   "main": "index.js",
+  "nyc": {
+    "require": [
+      "babel-register",
+      "jsdom-global/register"
+    ],
+    "include": [
+      "build/src",
+      "button/src",
+      "preloader/src",
+      "api/src",
+      "toreact/src"
+    ],
+    "sourceMap": false,
+    "instrument": false
+  },
+  "scripts": {
+    "//pretest": "flow",
+    "nycha": "cross-env NODE_ENV=TEST nyc mocha --recursive",
+    "test:build": "yarn nycha ./build/test",
+    "test:button": "yarn nycha ./button/test",
+    "test:preloader": "yarn nycha ./preloader/test",
+    "test:api": "yarn nycha ./api/test",
+    "test:toreact": "yarn nycha ./toreact/test",
+    "test": "yarn nycha ./build/test ./button/test ./preloader/test ./api/test ./toreact/test",
+    "prebuild": "yarn test",
+    "bundle": "cross-env NODE_ENV=BUILD node",
+    "build:build": "yarn bundle build/rollup.config.js",
+    "build:button": "yarn bundle button/rollup.config.js",
+    "build:preloader": "yarn bundle preloader/rollup.config.js",
+    "build:toreact": "yarn bundle toreact/rollup.config.js",
+    "build:api": "yarn bundle api/rollup.config.js",
+    "build": "run-s build:build build:button build:preloader build:api build:toreact",
+    "postbuild": "yarn format",
+    "format": "prettier --write **/*.js",
+    "report": "nyc report --reporter=lcov",
+    "codecov": "codecov",
+    "coverage": "run-s report codecov",
+    "node": "cross-env NODE_ENV=PLAY node -r babel-register"
+  },
   "dependencies": {
     "atra": "^1.1.0",
     "babel-runtime": "^6.26.0",
     "create-keyframes": "^1.0.1",
     "hast-util-select": "^1.0.1",
+    "jsonp-simple": "^0.0.4",
     "rehype-img-as": "^0.0.5",
     "rehype-minify-whitespace": "^2.0.3",
     "rehype-parse": "^4.0.0",
@@ -20,36 +60,13 @@
     "remark-rehype": "^2.0.1",
     "unified": "^6.1.5"
   },
-  "scripts": {
-    "//pretest": "flow",
-    "nycha": "cross-env NODE_ENV=test nyc mocha --recursive",
-    "test:build": "yarn nycha ./build/test",
-    "test:button": "yarn nycha ./button/test",
-    "test:preloader": "yarn nycha ./preloader/test",
-    "test:supplier": "yarn nycha ./supplier/test",
-    "test:toreact": "yarn nycha ./toreact/test",
-    "test": "yarn nycha ./build/test ./button/test ./preloader/test ./supplier/test ./toreact/test",
-    "prebuild": "yarn test",
-    "compile": "cross-env NODE_ENV=build babel",
-    "build:build": "yarn compile ./build/src -d ./build/lib",
-    "build:button": "yarn compile ./button/src -d ./button/lib",
-    "build:preloader": "yarn compile ./preloader/src -d ./preloader/lib",
-    "build:toreact": "yarn compile ./toreact/src -d ./toreact/lib",
-    "build:supplier": "yarn compile ./supplier/src -d ./supplier/lib",
-    "build": "run-s build:build build:button build:preloader build:supplier build:toreact",
-    "postbuild": "yarn format",
-    "format": "prettier --write **/*.js",
-    "report": "nyc report --reporter=lcov",
-    "codecov": "codecov",
-    "coverage": "run-s report codecov",
-    "node": "cross-env NODE_ENV=play node -r babel-register"
-  },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
     "babel-plugin-istanbul": "^4.1.5",
     "babel-plugin-rewire": "^1.1.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015-rollup": "^3.0.0",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-power-assert": "^1.0.0",
     "babel-preset-react": "^6.24.1",
@@ -59,6 +76,7 @@
     "enzyme-adapter-react-16": "^1.0.2",
     "flow-bin": "^0.57.3",
     "flow-typed": "^2.2.1",
+    "got": "^8.0.0",
     "jsdom": "^11.3.0",
     "jsdom-global": "^3.0.2",
     "mocha": "^4.0.1",
@@ -70,6 +88,12 @@
     "react-dom": "^16.0.0",
     "react-test-renderer": "^16.0.0",
     "rewire": "^2.5.2",
+    "rollup": "^0.51.8",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-flow": "^1.1.1",
+    "rollup-plugin-json": "^2.3.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
     "sinon": "^4.0.1"
   },
   "peerDependencies": {
@@ -79,85 +103,5 @@
     "tabWidth": 2,
     "semi": false,
     "singleQuote": true
-  },
-  "nyc": {
-    "require": [
-      "babel-register",
-      "jsdom-global/register"
-    ],
-    "include": [
-      "build/src",
-      "button/src",
-      "preloader/src",
-      "supplier/src",
-      "toreact/src"
-    ],
-    "sourceMap": false,
-    "instrument": false
-  },
-  "babel": {
-    "env": {
-      "build": {
-        "presets": [
-          [
-            "env",
-            {
-              "targets": {
-                "browsers": [
-                  "last 2 versions",
-                  "safari >= 7"
-                ]
-              }
-            }
-          ],
-          "flow",
-          "react"
-        ],
-        "plugins": [
-          "transform-runtime"
-        ]
-      },
-      "test": {
-        "presets": [
-          [
-            "env",
-            {
-              "targets": {
-                "browsers": ["last 2 versions"]
-              }
-            }
-          ],
-          "flow",
-          "react"
-        ],
-        "plugins": [
-          "istanbul",
-          "transform-runtime",
-          [
-            "espower",
-            {
-              "embedAst": true
-            }
-          ],
-          "empower-assert"
-        ]
-      },
-      "play": {
-        "presets": [
-          [
-            "env",
-            {
-              "targets": {
-                "browsers": [
-                  "last 2 versions",
-                  "safari >= 7"
-                ]
-              }
-            }
-          ],
-          "react"
-        ]
-      }
-    }
   }
 }

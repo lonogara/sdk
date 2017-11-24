@@ -5,7 +5,8 @@ import raw from 'rehype-raw'
 import align from '../../../.packages/rehype-align'
 import blank from '../../../.packages/rehype-blank'
 import hast2react from 'rehype-react'
-import { createElement } from 'react'
+import react from 'react'
+const { createElement } = react
 
 export default (markdown, components) =>
   unified()
