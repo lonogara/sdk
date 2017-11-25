@@ -1,7 +1,8 @@
-import React from 'react'
-import Atra from 'atra'
-import Keyframes from 'create-keyframes'
+import React from '../../node_modules/react/index.js'
+import Atra from '../../node_modules/atra/lib/index.js'
+import Keyframes from '../../node_modules/create-keyframes/index.js'
 
+//
 var assign = Object.assign
 
 var SIZE = 100
@@ -151,6 +152,7 @@ var toConsumableArray = function(arr) {
   }
 }
 
+//
 var transform = function transform() {
   var obj =
     arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
@@ -169,6 +171,7 @@ var getRange = function getRange(n) {
   return [].concat(toConsumableArray(Array(n).keys()))
 }
 
+//
 var SIZE$1 = 100
 var BACKGROUND_COLOR$1 = '#dddddd'
 var OBJECT_COLOR$1 = 'rgb(54, 73, 87)'
@@ -255,6 +258,7 @@ var a$1 = Atra({
   }
 })
 
+//
 var assign$1 = Object.assign
 
 var SIZE$2 = 100
@@ -331,6 +335,7 @@ var a$2 = Atra({
   }
 })
 
+//
 // const SPEED = 1.2
 
 var SIZE$3 = 100
@@ -416,6 +421,7 @@ var a$3 = Atra({
   }
 })
 
+//
 var SIZE$4 = 100
 var BACKGROUND_COLOR$4 = '#dddddd'
 var OBJECT_COLOR$4 = 'rgb(54, 73, 87)'
@@ -554,6 +560,7 @@ var a$4 = Atra({
   }
 })
 
+//
 var SIZE$5 = 100
 var BACKGROUND_COLOR$5 = '#dddddd'
 var OBJECT_COLOR$5 = 'rgb(54, 73, 87)'
@@ -661,6 +668,7 @@ var createAnim = function createAnim(cubeDistance) {
   })
 }
 
+//
 var SIZE$6 = 100
 var BACKGROUND_COLOR$6 = '#dddddd'
 var OBJECT_COLOR$6 = 'rgb(54, 73, 87)'
@@ -734,6 +742,7 @@ var a$6 = Atra({
   }
 })
 
+//
 var SIZE$7 = 100
 var BACKGROUND_COLOR$7 = '#dddddd'
 var OBJECT_COLOR$7 = 'rgb(54, 73, 87)'
@@ -782,6 +791,7 @@ var a$7 = Atra({
   }
 })
 
+//
 var SIZE$8 = 100
 var BACKGROUND_COLOR$8 = '#dddddd'
 var OBJECT_COLOR$8 = 'rgb(54, 73, 87)'
@@ -856,6 +866,7 @@ var a$8 = Atra({
   }
 })
 
+//
 var assign$3 = Object.assign
 
 var SIZE$9 = 100
@@ -926,6 +937,7 @@ var a$9 = Atra({
   }
 })
 
+//
 var SIZE$10 = 100
 var BACKGROUND_COLOR$10 = '#dddddd'
 var OBJECT_COLOR$10 = 'rgb(54, 73, 87)'
@@ -991,6 +1003,8 @@ var a$10 = Atra({
     }
   }
 })
+
+//
 
 export {
   index as ChasingDots,

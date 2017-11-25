@@ -10,7 +10,7 @@
 
 [`ligure-tool/preloader`](https://github.com/kthjm/ligure-tool/tree/master/preloader)
 
-[`ligure-tool/supplier`](https://github.com/kthjm/ligure-tool/tree/master/supplier)
+[`ligure-tool/api`](https://github.com/kthjm/ligure-tool/tree/master/api)
 
 [`ligure-tool/toreact`](https://github.com/kthjm/ligure-tool/tree/master/toreact)
 

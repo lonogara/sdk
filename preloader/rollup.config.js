@@ -9,13 +9,13 @@ const DIR = './preloader'
 rollup
   .rollup({
     input: `${DIR}/src/index.js`,
+    external: id => id.includes(`node_modules`),
     plugins: [
-      babel({ exclude: 'node_modules/**' }),
       flow(),
-      resolve({ jsnext: true }),
-      commonjs()
-    ],
-    external: ['react', 'atra', 'create-keyframes']
+      babel({ exclude: 'node_modules/**' }),
+      resolve({ module: false }),
+      commonjs({ sourceMap: false })
+    ]
   })
   .then(bundle => {
     bundle.write({ format: 'cjs', file: `${DIR}/dist/cjs.js` })

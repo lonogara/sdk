@@ -9,17 +9,13 @@ const DIR = './api'
 rollup
   .rollup({
     input: `${DIR}/src/index.js`,
+    external: id => id.includes(`node_modules`),
     plugins: [
       flow(),
-      resolve({ jsnext: true }),
-      commonjs(),
-      babel({
-        exclude: 'node_modules/**'
-        // externalHelpers: false,
-        // runtimeHelpers: true
-      })
-    ],
-    external: ['jsonp-simple', 'regenerator-runtime']
+      babel({ exclude: 'node_modules/**' }),
+      resolve({ module: false }),
+      commonjs({ sourceMap: false })
+    ]
   })
   .then(bundle => {
     bundle.write({ format: 'cjs', file: `${DIR}/dist/cjs.js` })

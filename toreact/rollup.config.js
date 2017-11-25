@@ -3,39 +3,18 @@ const resolve = require('rollup-plugin-node-resolve')
 const commonjs = require('rollup-plugin-commonjs')
 const babel = require('rollup-plugin-babel')
 const flow = require('rollup-plugin-flow')
-const json = require('rollup-plugin-json')
 
 const DIR = './toreact'
 
 rollup
   .rollup({
     input: `${DIR}/src/index.js`,
-    external: [
-      'path',
-      'url',
-      'util',
-      'unified',
-      'rehype-parse',
-      'rehype-img-as',
-      'rehype-react',
-      'react',
-      'remark-parse',
-      'remark-rehype',
-      'rehype-raw',
-      // '../../../.packages/rehype-align',
-      // '../../../.packages/rehype-blank'
-      'hast-util-select'
-    ],
+    external: id => id.includes(`node_modules`),
     plugins: [
-      json(),
-      commonjs({ sourceMap: false }),
-      resolve({ jsnext: true }),
-      babel({
-        exclude: 'node_modules/**'
-        // externalHelpers: false,
-        // runtimeHelpers: true
-      }),
-      flow()
+      flow(),
+      babel({ exclude: 'node_modules/**' }),
+      resolve({ module: true }),
+      commonjs({ sourceMap: false })
     ]
   })
   .then(bundle => {

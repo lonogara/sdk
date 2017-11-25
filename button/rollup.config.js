@@ -9,13 +9,14 @@ const DIR = './button'
 rollup
   .rollup({
     input: `${DIR}/src/index.js`,
+    external: id => id.includes(`node_modules`),
     plugins: [
-      babel({ exclude: 'node_modules/**' }),
       flow(),
-      resolve({ jsnext: true }),
-      commonjs()
-    ],
-    external: ['react', 'atra']
+      babel({ exclude: 'node_modules/**' }),
+      // resolve({ module: false }),
+      resolve({ module: false }),
+      commonjs({ sourceMap: false })
+    ]
   })
   .then(bundle => {
     bundle.write({ format: 'cjs', file: `${DIR}/dist/cjs.js` })

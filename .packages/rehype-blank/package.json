@@ -1,5 +1,6 @@
 {
   "name": "rehype-blank",
   "version": "0.0.0",
-  "main": "index.js"
+  "main": "index.js",
+  "module": "es6.js"
 }

@@ -1,5 +1,5 @@
-import React from 'react'
-import Atra from 'atra'
+import React from '../../node_modules/react/index.js'
+import Atra from '../../node_modules/atra/lib/index.js'
 
 var index = function(_ref) {
   var choised = _ref.choised

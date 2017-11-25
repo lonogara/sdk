@@ -9,20 +9,12 @@ const DIR = './build'
 rollup
   .rollup({
     input: `${DIR}/src/index.js`,
+    external: id => id.includes(`node_modules`),
     plugins: [
-      babel({ exclude: 'node_modules/**' }),
       flow(),
-      resolve({ jsnext: true }),
-      commonjs()
-    ],
-    external: [
-      'unified',
-      'remark-parse',
-      'remark-rehype',
-      'rehype-raw',
-      'rehype-minify-whitespace',
-      'rehype-stringify',
-      'hast-util-select'
+      babel({ exclude: 'node_modules/**' }),
+      resolve({ module: true }),
+      commonjs({ sourceMap: false })
     ]
   })
   .then(bundle => {
