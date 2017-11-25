@@ -6,27 +6,16 @@ function _interopDefault(ex) {
   return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex
 }
 
-var unified = _interopDefault(require('../../node_modules/unified/index.js'))
-var html2hast = _interopDefault(
-  require('../../node_modules/rehype-parse/index.js')
-)
-var imgas = _interopDefault(
-  require('../../node_modules/rehype-img-as/lib/index.js')
-)
-var hast2react = _interopDefault(
-  require('../../node_modules/rehype-react/index.js')
-)
-var react = _interopDefault(require('../../node_modules/react/index.js'))
-var hastUtilSelect = _interopDefault(
-  require('../../node_modules/hast-util-select/index.js')
-)
-var markdown2mdast = _interopDefault(
-  require('../../node_modules/remark-parse/index.js')
-)
-var mdast2hast = _interopDefault(
-  require('../../node_modules/remark-rehype/index.js')
-)
-var raw = _interopDefault(require('../../node_modules/rehype-raw/index.js'))
+var unified = _interopDefault(require('unified'))
+var html2hast = _interopDefault(require('rehype-parse'))
+var imgas = _interopDefault(require('rehype-img-as'))
+var hast2react = _interopDefault(require('rehype-react'))
+var react = _interopDefault(require('react'))
+var blank = _interopDefault(require('../../.packages/rehype-blank'))
+var markdown2mdast = _interopDefault(require('remark-parse'))
+var mdast2hast = _interopDefault(require('remark-rehype'))
+var raw = _interopDefault(require('rehype-raw'))
+var align = _interopDefault(require('../../.packages/rehype-align'))
 
 var createElement = react.createElement
 
@@ -38,20 +27,6 @@ var index = function(html, components, imgasOpts) {
     .process(html)
 }
 
-var selectAll = hastUtilSelect.selectAll
-
-var blank = function() {
-  return function(ast) {
-    return selectAll('a', ast).forEach(function(a) {
-      var properties = a.properties
-
-      if (!properties.target) {
-        properties.target = '_blank'
-      }
-    })
-  }
-}
-
 var createElement$1 = react.createElement
 
 var index$1 = function(html, components) {
@@ -60,23 +35,6 @@ var index$1 = function(html, components) {
     .use(blank)
     .use(hast2react, { createElement: createElement$1, components: components })
     .process(html)
-}
-
-var selectAll$1 = hastUtilSelect.selectAll
-
-var align = function() {
-  return function(ast) {
-    return selectAll$1('[align]', ast).forEach(function(node) {
-      var properties = node.properties,
-        align = properties.align
-
-      properties.style = properties.style
-        ? properties.style + ';text-align:' + align
-        : 'text-align:' + align
-
-      delete properties.align
-    })
-  }
 }
 
 var createElement$2 = react.createElement

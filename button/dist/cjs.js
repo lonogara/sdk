@@ -6,8 +6,8 @@ function _interopDefault(ex) {
   return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex
 }
 
-var React = _interopDefault(require('../../node_modules/react/index.js'))
-var Atra = _interopDefault(require('../../node_modules/atra/lib/index.js'))
+var React = _interopDefault(require('react'))
+var Atra = _interopDefault(require('atra'))
 
 var index = function(_ref) {
   var choised = _ref.choised

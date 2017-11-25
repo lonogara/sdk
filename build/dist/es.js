@@ -1,41 +1,11 @@
-import unified from '../../node_modules/unified/index.js'
-import markdown2mdast from '../../node_modules/remark-parse/index.js'
-import mdast2hast from '../../node_modules/remark-rehype/index.js'
-import raw from '../../node_modules/rehype-raw/index.js'
-import hastUtilSelect from '../../node_modules/hast-util-select/index.js'
-import minify from '../../node_modules/rehype-minify-whitespace/index.js'
-import hast2html from '../../node_modules/rehype-stringify/index.js'
-
-var selectAll = hastUtilSelect.selectAll
-
-var align = function() {
-  return function(ast) {
-    return selectAll('[align]', ast).forEach(function(node) {
-      var properties = node.properties,
-        align = properties.align
-
-      properties.style = properties.style
-        ? properties.style + ';text-align:' + align
-        : 'text-align:' + align
-
-      delete properties.align
-    })
-  }
-}
-
-var selectAll$1 = hastUtilSelect.selectAll
-
-var blank = function() {
-  return function(ast) {
-    return selectAll$1('a', ast).forEach(function(a) {
-      var properties = a.properties
-
-      if (!properties.target) {
-        properties.target = '_blank'
-      }
-    })
-  }
-}
+import unified from 'unified'
+import markdown2mdast from 'remark-parse'
+import mdast2hast from 'remark-rehype'
+import raw from 'rehype-raw'
+import align from '../../.packages/rehype-align'
+import blank from '../../.packages/rehype-blank'
+import minify from 'rehype-minify-whitespace'
+import hast2html from 'rehype-stringify'
 
 var processor = unified()
   .use(markdown2mdast, { commonmark: true })

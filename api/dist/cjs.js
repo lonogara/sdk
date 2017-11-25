@@ -6,12 +6,8 @@ function _interopDefault(ex) {
   return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex
 }
 
-var jsonp = _interopDefault(
-  require('../../node_modules/jsonp-simple/dist/index.js')
-)
-var regeneratorRuntime = _interopDefault(
-  require('../../node_modules/regenerator-runtime/runtime-module.js')
-)
+var jsonp = _interopDefault(require('jsonp-simple'))
+var regeneratorRuntime = _interopDefault(require('regenerator-runtime'))
 
 var classCallCheck = function(instance, Constructor) {
   if (!(instance instanceof Constructor)) {

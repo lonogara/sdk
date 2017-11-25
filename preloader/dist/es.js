@@ -1,6 +1,6 @@
-import React from '../../node_modules/react/index.js'
-import Atra from '../../node_modules/atra/lib/index.js'
-import Keyframes from '../../node_modules/create-keyframes/index.js'
+import React from 'react'
+import Atra from 'atra'
+import Keyframes from 'create-keyframes'
 
 //
 var assign = Object.assign

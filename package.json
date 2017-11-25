@@ -43,14 +43,18 @@
     "//pretest": "flow",
     "test": "run-s test:require test:all",
     "posttest": "nyc report --reporter=lcov",
-    "coverage": "codecov"
+    "coverage": "codecov",
+    "compile": "cross-env NODE_ENV=PACKAGE babel",
+    "package:align": "yarn compile .packages/rehype-align/es.js -o .packages/rehype-align/index.js",
+    "package:blank": "yarn compile .packages/rehype-blank/es.js -o .packages/rehype-blank/index.js",
+    "package": "run-p package:align package:blank"
   },
   "dependencies": {
     "atra": "^1.1.0",
-    "babel-runtime": "^6.26.0",
     "create-keyframes": "^1.0.1",
     "hast-util-select": "^1.0.1",
     "jsonp-simple": "^0.0.4",
+    "regenerator-runtime": "^0.11.0",
     "rehype-img-as": "^0.0.5",
     "rehype-minify-whitespace": "^2.0.3",
     "rehype-parse": "^4.0.0",
@@ -62,10 +66,10 @@
     "unified": "^6.1.5"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-plugin-istanbul": "^4.1.5",
     "babel-plugin-rewire": "^1.1.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2015-rollup": "^3.0.0",
     "babel-preset-flow": "^6.23.0",
@@ -93,8 +97,6 @@
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-flow": "^1.1.1",
-    "rollup-plugin-json": "^2.3.0",
-    "rollup-plugin-node-resolve": "^3.0.0",
     "sinon": "^4.0.1"
   },
   "peerDependencies": {

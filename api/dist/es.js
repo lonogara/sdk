@@ -1,5 +1,5 @@
-import jsonp from '../../node_modules/jsonp-simple/dist/index.js'
-import regeneratorRuntime from '../../node_modules/regenerator-runtime/runtime-module.js'
+import jsonp from 'jsonp-simple'
+import regeneratorRuntime from 'regenerator-runtime'
 
 var classCallCheck = function(instance, Constructor) {
   if (!(instance instanceof Constructor)) {

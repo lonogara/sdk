@@ -2,13 +2,13 @@
   "env": {
     "TEST": {
       "presets": [
-        ["env", { "targets": { "browsers": ["last 2 versions"] } }],
+        ["env", { "targets": { "node": "current" } }],
         "flow",
         "react"
       ],
       "plugins": [
         "istanbul",
-        "transform-runtime",
+        "rewire",
         ["espower", { "embedAst": true }],
         "empower-assert"
       ]
@@ -19,10 +19,9 @@
         "react"
       ]
     },
-    "PLAY": {
+    "PACKAGE": {
       "presets": [
-        ["env", { "targets": { "node": "current" } }],
-        "react"
+        ["env", { "targets": { "browsers": ["last 2 versions"] } }]
       ]
     }
   }

@@ -1,12 +1,13 @@
-import unified from '../../node_modules/unified/index.js'
-import html2hast from '../../node_modules/rehype-parse/index.js'
-import imgas from '../../node_modules/rehype-img-as/lib/index.js'
-import hast2react from '../../node_modules/rehype-react/index.js'
-import react from '../../node_modules/react/index.js'
-import hastUtilSelect from '../../node_modules/hast-util-select/index.js'
-import markdown2mdast from '../../node_modules/remark-parse/index.js'
-import mdast2hast from '../../node_modules/remark-rehype/index.js'
-import raw from '../../node_modules/rehype-raw/index.js'
+import unified from 'unified'
+import html2hast from 'rehype-parse'
+import imgas from 'rehype-img-as'
+import hast2react from 'rehype-react'
+import react from 'react'
+import blank from '../../.packages/rehype-blank'
+import markdown2mdast from 'remark-parse'
+import mdast2hast from 'remark-rehype'
+import raw from 'rehype-raw'
+import align from '../../.packages/rehype-align'
 
 var createElement = react.createElement
 
@@ -18,20 +19,6 @@ var index = function(html, components, imgasOpts) {
     .process(html)
 }
 
-var selectAll = hastUtilSelect.selectAll
-
-var blank = function() {
-  return function(ast) {
-    return selectAll('a', ast).forEach(function(a) {
-      var properties = a.properties
-
-      if (!properties.target) {
-        properties.target = '_blank'
-      }
-    })
-  }
-}
-
 var createElement$1 = react.createElement
 
 var index$1 = function(html, components) {
@@ -40,23 +27,6 @@ var index$1 = function(html, components) {
     .use(blank)
     .use(hast2react, { createElement: createElement$1, components: components })
     .process(html)
-}
-
-var selectAll$1 = hastUtilSelect.selectAll
-
-var align = function() {
-  return function(ast) {
-    return selectAll$1('[align]', ast).forEach(function(node) {
-      var properties = node.properties,
-        align = properties.align
-
-      properties.style = properties.style
-        ? properties.style + ';text-align:' + align
-        : 'text-align:' + align
-
-      delete properties.align
-    })
-  }
 }
 
 var createElement$2 = react.createElement
