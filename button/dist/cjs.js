@@ -124,7 +124,7 @@ var index$2 = function(_ref) {
       'path',
       a$2('path_1', {
         style: {
-          fill: choised ? 'none' : 'var(--base-color)',
+          fill: choised ? '#ffffff' : 'var(--base-color)',
           stroke: choised ? '#ffffff' : 'var(--base-color)'
         }
       })

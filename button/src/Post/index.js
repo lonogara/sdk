@@ -13,7 +13,7 @@ export default ({ choised }) => (
     <path
       {...a('path_1', {
         style: {
-          fill: choised ? 'none' : 'var(--base-color)',
+          fill: choised ? '#ffffff' : 'var(--base-color)',
           stroke: choised ? '#ffffff' : 'var(--base-color)'
         }
       })}

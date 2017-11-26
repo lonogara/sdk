@@ -5,7 +5,7 @@ import Keyframes from 'create-keyframes'
 const { assign } = Object
 
 const SIZE = 100
-const BACKGROUND_COLOR = '#dddddd'
+// const BACKGROUND_COLOR = '#dddddd'
 const OBJECT_COLOR = 'rgb(54, 73, 87)'
 const DURATION = 2
 
@@ -16,7 +16,7 @@ type Props = {
   duration?: number
 }
 
-export default (props: Props) => {
+export default (props: Props = {}) => {
   const duration = props.duration || DURATION
   return (
     <div
@@ -24,7 +24,7 @@ export default (props: Props) => {
         style: {
           width: props.size || SIZE,
           height: props.size || SIZE,
-          backgroundColor: props.backgroundColor || BACKGROUND_COLOR
+          backgroundColor: props.backgroundColor
         }
       })}
     >

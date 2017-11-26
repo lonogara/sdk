@@ -5,7 +5,7 @@ import Keyframes from 'create-keyframes'
 import { transform } from '../util.js'
 
 const SIZE = 100
-const BACKGROUND_COLOR = '#dddddd'
+// const BACKGROUND_COLOR = '#dddddd'
 const OBJECT_COLOR = 'rgb(54, 73, 87)'
 const DURATION = 2.4
 
@@ -16,7 +16,7 @@ type Props = {
   duration?: number
 }
 
-export default (props: Props) => {
+export default (props: Props = {}) => {
   const parentSize = props.size || SIZE
   const wrapSize = parentSize / Math.SQRT2 - 1
 
@@ -26,7 +26,7 @@ export default (props: Props) => {
         style: {
           width: parentSize,
           height: parentSize,
-          backgroundColor: props.backgroundColor || BACKGROUND_COLOR
+          backgroundColor: props.backgroundColor
         }
       })}
     >

@@ -7,7 +7,7 @@ import { getRange } from '../util.js'
 // const SPEED = 1.2
 
 const SIZE = 100
-const BACKGROUND_COLOR = '#dddddd'
+// const BACKGROUND_COLOR = '#dddddd'
 const OBJECT_COLOR = 'rgb(54, 73, 87)'
 const DURATION = 1.2
 
@@ -18,13 +18,13 @@ type Props = {
   duration?: number
 }
 
-export default (props: Props) => (
+export default (props: Props = {}) => (
   <div
     {...a('PARENT', {
       style: {
         width: props.size || SIZE,
         height: props.size || SIZE,
-        backgroundColor: props.backgroundColor || BACKGROUND_COLOR
+        backgroundColor: props.backgroundColor
       }
     })}
   >

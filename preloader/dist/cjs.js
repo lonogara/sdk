@@ -14,11 +14,14 @@ var Keyframes = _interopDefault(require('create-keyframes'))
 var assign = Object.assign
 
 var SIZE = 100
-var BACKGROUND_COLOR = '#dddddd'
+// const BACKGROUND_COLOR = '#dddddd'
 var OBJECT_COLOR = 'rgb(54, 73, 87)'
 var DURATION = 2
 
-var index = function(props) {
+var index = function() {
+  var props =
+    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
+
   var duration = props.duration || DURATION
   return React.createElement(
     'div',
@@ -26,7 +29,7 @@ var index = function(props) {
       style: {
         width: props.size || SIZE,
         height: props.size || SIZE,
-        backgroundColor: props.backgroundColor || BACKGROUND_COLOR
+        backgroundColor: props.backgroundColor
       }
     }),
     React.createElement(
@@ -181,18 +184,20 @@ var getRange = function getRange(n) {
 
 //
 var SIZE$1 = 100
-var BACKGROUND_COLOR$1 = '#dddddd'
+// const BACKGROUND_COLOR = '#dddddd'
 var OBJECT_COLOR$1 = 'rgb(54, 73, 87)'
 var DURATION$1 = 1.2
 
-var index$1 = function(props) {
+var index$1 = function() {
+  var props =
+    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
   return React.createElement(
     'div',
     a$1('PARENT', {
       style: {
         width: props.size || SIZE$1,
         height: props.size || SIZE$1,
-        backgroundColor: props.backgroundColor || BACKGROUND_COLOR$1
+        backgroundColor: props.backgroundColor
       }
     }),
     React.createElement(Circles, {
@@ -270,11 +275,14 @@ var a$1 = Atra({
 var assign$1 = Object.assign
 
 var SIZE$2 = 100
-var BACKGROUND_COLOR$2 = '#dddddd'
+// const BACKGROUND_COLOR = '#dddddd'
 var OBJECT_COLOR$2 = 'rgb(54, 73, 87)'
 var DURATION$2 = 1.4
 
-var index$2 = function(props) {
+var index$2 = function() {
+  var props =
+    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
+
   var parentSize = props.size || SIZE$2
 
   var childSize = parentSize / 4
@@ -293,7 +301,7 @@ var index$2 = function(props) {
       style: {
         width: parentSize,
         height: parentSize,
-        backgroundColor: props.backgroundColor || BACKGROUND_COLOR$2
+        backgroundColor: props.backgroundColor
       }
     }),
     React.createElement('div', a$2('CHILD_FIRST', childMutable)),
@@ -347,18 +355,20 @@ var a$2 = Atra({
 // const SPEED = 1.2
 
 var SIZE$3 = 100
-var BACKGROUND_COLOR$3 = '#dddddd'
+// const BACKGROUND_COLOR = '#dddddd'
 var OBJECT_COLOR$3 = 'rgb(54, 73, 87)'
 var DURATION$3 = 1.2
 
-var index$3 = function(props) {
+var index$3 = function() {
+  var props =
+    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
   return React.createElement(
     'div',
     a$3('PARENT', {
       style: {
         width: props.size || SIZE$3,
         height: props.size || SIZE$3,
-        backgroundColor: props.backgroundColor || BACKGROUND_COLOR$3
+        backgroundColor: props.backgroundColor
       }
     }),
     React.createElement(Circles$1, {
@@ -431,11 +441,14 @@ var a$3 = Atra({
 
 //
 var SIZE$4 = 100
-var BACKGROUND_COLOR$4 = '#dddddd'
+// const BACKGROUND_COLOR = '#dddddd'
 var OBJECT_COLOR$4 = 'rgb(54, 73, 87)'
 var DURATION$4 = 2.4
 
-var index$4 = function(props) {
+var index$4 = function() {
+  var props =
+    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
+
   var parentSize = props.size || SIZE$4
   var wrapSize = parentSize / Math.SQRT2 - 1
 
@@ -445,7 +458,7 @@ var index$4 = function(props) {
       style: {
         width: parentSize,
         height: parentSize,
-        backgroundColor: props.backgroundColor || BACKGROUND_COLOR$4
+        backgroundColor: props.backgroundColor
       }
     }),
     React.createElement(
@@ -570,11 +583,14 @@ var a$4 = Atra({
 
 //
 var SIZE$5 = 100
-var BACKGROUND_COLOR$5 = '#dddddd'
+// const BACKGROUND_COLOR = '#dddddd'
 var OBJECT_COLOR$5 = 'rgb(54, 73, 87)'
 var DURATION$5 = 1.8
 
-var index$5 = function(props) {
+var index$5 = function() {
+  var props =
+    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
+
   var parentSize = props.size || SIZE$5
 
   var cubeSize = parentSize / 4
@@ -587,7 +603,7 @@ var index$5 = function(props) {
       style: {
         width: parentSize,
         height: parentSize,
-        backgroundColor: props.backgroundColor || BACKGROUND_COLOR$5
+        backgroundColor: props.backgroundColor
       }
     }),
     React.createElement(
@@ -678,18 +694,20 @@ var createAnim = function createAnim(cubeDistance) {
 
 //
 var SIZE$6 = 100
-var BACKGROUND_COLOR$6 = '#dddddd'
+// const BACKGROUND_COLOR = '#dddddd'
 var OBJECT_COLOR$6 = 'rgb(54, 73, 87)'
 var DURATION$6 = 1.5
 
-var index$6 = function(props) {
+var index$6 = function() {
+  var props =
+    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
   return React.createElement(
     'div',
     a$6('PARENT', {
       style: {
         width: props.size || SIZE$6,
         height: props.size || SIZE$6,
-        backgroundColor: props.backgroundColor || BACKGROUND_COLOR$6
+        backgroundColor: props.backgroundColor
       }
     }),
     React.createElement(Cubes$1, {
@@ -752,18 +770,20 @@ var a$6 = Atra({
 
 //
 var SIZE$7 = 100
-var BACKGROUND_COLOR$7 = '#dddddd'
+// const BACKGROUND_COLOR = '#dddddd'
 var OBJECT_COLOR$7 = 'rgb(54, 73, 87)'
 var DURATION$7 = 1
 
-var index$7 = function(props) {
+var index$7 = function() {
+  var props =
+    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
   return React.createElement(
     'div',
     a$7('PARENT', {
       style: {
         width: props.size || SIZE$7,
         height: props.size || SIZE$7,
-        backgroundColor: props.backgroundColor || BACKGROUND_COLOR$7
+        backgroundColor: props.backgroundColor
       }
     }),
     React.createElement(
@@ -801,18 +821,20 @@ var a$7 = Atra({
 
 //
 var SIZE$8 = 100
-var BACKGROUND_COLOR$8 = '#dddddd'
+// const BACKGROUND_COLOR = '#dddddd'
 var OBJECT_COLOR$8 = 'rgb(54, 73, 87)'
 var DURATION$8 = 1.2
 
-var index$8 = function(props) {
+var index$8 = function() {
+  var props =
+    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
   return React.createElement(
     'div',
     a$8('PARENT', {
       style: {
         width: props.size || SIZE$8,
         height: props.size || SIZE$8,
-        backgroundColor: props.backgroundColor || BACKGROUND_COLOR$8
+        backgroundColor: props.backgroundColor
       }
     }),
     React.createElement(Rects, {
@@ -878,18 +900,20 @@ var a$8 = Atra({
 var assign$3 = Object.assign
 
 var SIZE$9 = 100
-var BACKGROUND_COLOR$9 = '#dddddd'
+// const BACKGROUND_COLOR = '#dddddd'
 var OBJECT_COLOR$9 = 'rgb(54, 73, 87)'
 var DURATION$9 = 2
 
-var index$9 = function(props) {
+var index$9 = function() {
+  var props =
+    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
   return React.createElement(
     'div',
     a$9('PARENT', {
       style: {
         width: props.size || SIZE$9,
         height: props.size || SIZE$9,
-        backgroundColor: props.backgroundColor || BACKGROUND_COLOR$9
+        backgroundColor: props.backgroundColor
       }
     }),
     React.createElement(
@@ -947,18 +971,20 @@ var a$9 = Atra({
 
 //
 var SIZE$10 = 100
-var BACKGROUND_COLOR$10 = '#dddddd'
+// const BACKGROUND_COLOR = '#dddddd'
 var OBJECT_COLOR$10 = 'rgb(54, 73, 87)'
 var DURATION$10 = 1.2
 
-var index$10 = function(props) {
+var index$10 = function() {
+  var props =
+    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
   return React.createElement(
     'div',
     a$10('PARENT', {
       style: {
         width: props.size || SIZE$10,
         height: props.size || SIZE$10,
-        backgroundColor: props.backgroundColor || BACKGROUND_COLOR$10
+        backgroundColor: props.backgroundColor
       }
     }),
     React.createElement(
