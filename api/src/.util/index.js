@@ -1,5 +1,15 @@
 import regeneratorRuntime from 'regenerator-runtime'
 
+export const fetchJson = (url, opts) =>
+  window.fetch(url, opts).then(res => res.json())
+
+export const validTotal = total => {
+  if (typeof total !== 'number') {
+    throw new Error(``)
+  }
+  return total
+}
+
 function* loop(hub) {
   while (true) {
     const value = hub.pass()

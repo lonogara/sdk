@@ -1,16 +1,16 @@
 import regeneratorRuntime from 'regenerator-runtime'
 import { throwTotal, throwCallback } from './common.js'
 
-function* twentyGenerator(offset) {
+function* generateFromTo(from, to) {
   let plus = 0
-  while (plus < 20) {
-    yield offset + plus
+  while (plus < to) {
+    yield from + plus
     plus += 1
   }
 }
 
 export default class Random {
-  constructor(total, cb) {
+  constructor(total, cb, opts = {}) {
     throwTotal(total)
     throwCallback(cb)
 
@@ -20,6 +20,8 @@ export default class Random {
     this._total = total
     this._lastOffset = total - 1
     this._cb = cb
+
+    this._limit = opts.limit || 20
   }
 
   _value() {
@@ -47,7 +49,7 @@ export default class Random {
       return this._create()
     }
 
-    const limit = this._recursiveAdd(twentyGenerator(offset))
+    const limit = this._recursiveAdd(generateFromTo(offset, this._limit))
 
     if (this._isReturn()) {
       this._done = true

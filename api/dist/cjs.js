@@ -9,6 +9,22 @@ function _interopDefault(ex) {
 var jsonp = _interopDefault(require('jsonp-simple'))
 var regeneratorRuntime = _interopDefault(require('regenerator-runtime'))
 
+var facebook = Object.freeze({})
+
+var instagram = Object.freeze({})
+
+var throwTotal = function throwTotal(total) {
+  if (typeof total !== 'number') {
+    throw new TypeError('hub first argument must be "number"')
+  }
+}
+
+var throwCallback = function throwCallback(cb) {
+  if (typeof cb !== 'function') {
+    throw new TypeError('hub second argument must be "function"')
+  }
+}
+
 var classCallCheck = function(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError('Cannot call a class as a function')
@@ -77,109 +93,6 @@ var slicedToArray = (function() {
   }
 })()
 
-var _marked = /*#__PURE__*/ regeneratorRuntime.mark(loop)
-
-function loop(hub) {
-  var value
-  return regeneratorRuntime.wrap(
-    function loop$(_context) {
-      while (1) {
-        switch ((_context.prev = _context.next)) {
-          case 0:
-            value = hub.pass()
-
-            if (!hub.done()) {
-              _context.next = 6
-              break
-            }
-
-            return _context.abrupt('return', value)
-
-          case 6:
-            _context.next = 8
-            return value
-
-          case 8:
-            _context.next = 0
-            break
-
-          case 10:
-          case 'end':
-            return _context.stop()
-        }
-      }
-    },
-    _marked,
-    this
-  )
-}
-
-var create = function create(hub) {
-  var iterator = loop(hub)
-  return handle
-
-  function handle() {
-    var _iterator$next = iterator.next(),
-      value = _iterator$next.value,
-      done = _iterator$next.done
-
-    return Promise.resolve(value).then(function(res) {
-      return { res: res, done: done }
-    })
-  }
-}
-
-var queryjoin = function queryjoin(query) {
-  return Object.entries(query)
-    .map(function(_ref) {
-      var _ref2 = slicedToArray(_ref, 2),
-        key = _ref2[0],
-        value = _ref2[1]
-
-      return key + '=' + value
-    })
-    .join('&')
-}
-
-var Query = (function() {
-  function Query() {
-    classCallCheck(this, Query)
-
-    for (
-      var _len = arguments.length, prequery = Array(_len), _key = 0;
-      _key < _len;
-      _key++
-    ) {
-      prequery[_key] = arguments[_key]
-    }
-
-    this.prequery = Object.assign.apply(Object, [{}].concat(prequery))
-  }
-
-  createClass(Query, [
-    {
-      key: 'string',
-      value: function string(addition) {
-        var query = Object.assign({}, this.prequery, addition)
-        return queryjoin(query)
-      }
-    }
-  ])
-  return Query
-})()
-
-var throwTotal = function throwTotal(total) {
-  if (typeof total !== 'number') {
-    throw new TypeError('hub first argument must be "number"')
-  }
-}
-
-var throwCallback = function throwCallback(cb) {
-  if (typeof cb !== 'function') {
-    throw new TypeError('hub second argument must be "function"')
-  }
-}
-
 var Straight = (function() {
   function Straight(total, cb) {
     var opts =
@@ -239,25 +152,25 @@ var Straight = (function() {
   return Straight
 })()
 
-var _marked$1 = /*#__PURE__*/ regeneratorRuntime.mark(twentyGenerator)
+var _marked = /*#__PURE__*/ regeneratorRuntime.mark(generateFromTo)
 
-function twentyGenerator(offset) {
+function generateFromTo(from, to) {
   var plus
   return regeneratorRuntime.wrap(
-    function twentyGenerator$(_context) {
+    function generateFromTo$(_context) {
       while (1) {
         switch ((_context.prev = _context.next)) {
           case 0:
             plus = 0
 
           case 1:
-            if (!(plus < 20)) {
+            if (!(plus < to)) {
               _context.next = 7
               break
             }
 
             _context.next = 4
-            return offset + plus
+            return from + plus
 
           case 4:
             plus += 1
@@ -270,13 +183,15 @@ function twentyGenerator(offset) {
         }
       }
     },
-    _marked$1,
+    _marked,
     this
   )
 }
 
 var Random = (function() {
   function Random(total, cb) {
+    var opts =
+      arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {}
     classCallCheck(this, Random)
 
     throwTotal(total)
@@ -288,6 +203,8 @@ var Random = (function() {
     this._total = total
     this._lastOffset = total - 1
     this._cb = cb
+
+    this._limit = opts.limit || 20
   }
 
   createClass(Random, [
@@ -330,7 +247,7 @@ var Random = (function() {
           return this._create()
         }
 
-        var limit = this._recursiveAdd(twentyGenerator(offset))
+        var limit = this._recursiveAdd(generateFromTo(offset, this._limit))
 
         if (this._isReturn()) {
           this._done = true
@@ -360,9 +277,136 @@ var Random = (function() {
   return Random
 })()
 
+var _marked$1 = /*#__PURE__*/ regeneratorRuntime.mark(loop)
+
+var fetchJson = function fetchJson(url, opts) {
+  return window.fetch(url, opts).then(function(res) {
+    return res.json()
+  })
+}
+
+var validTotal = function validTotal(total) {
+  if (typeof total !== 'number') {
+    throw new Error('')
+  }
+  return total
+}
+
+function loop(hub) {
+  var value
+  return regeneratorRuntime.wrap(
+    function loop$(_context) {
+      while (1) {
+        switch ((_context.prev = _context.next)) {
+          case 0:
+            value = hub.pass()
+
+            if (!hub.done()) {
+              _context.next = 6
+              break
+            }
+
+            return _context.abrupt('return', value)
+
+          case 6:
+            _context.next = 8
+            return value
+
+          case 8:
+            _context.next = 0
+            break
+
+          case 10:
+          case 'end':
+            return _context.stop()
+        }
+      }
+    },
+    _marked$1,
+    this
+  )
+}
+
+var create = function create(hub) {
+  var iterator = loop(hub)
+  return handle
+
+  function handle() {
+    var _iterator$next = iterator.next(),
+      value = _iterator$next.value,
+      done = _iterator$next.done
+
+    return Promise.resolve(value).then(function(res) {
+      return { res: res, done: done }
+    })
+  }
+}
+
+var queryjoin = function queryjoin(query) {
+  return Object.entries(query)
+    .map(function(_ref) {
+      var _ref2 = slicedToArray(_ref, 2),
+        key = _ref2[0],
+        value = _ref2[1]
+
+      return key + '=' + value
+    })
+    .join('&')
+}
+
+var Query = (function() {
+  function Query() {
+    classCallCheck(this, Query)
+
+    for (
+      var _len = arguments.length, prequery = Array(_len), _key = 0;
+      _key < _len;
+      _key++
+    ) {
+      prequery[_key] = arguments[_key]
+    }
+
+    this.prequery = Object.assign.apply(Object, [{}].concat(prequery))
+  }
+
+  createClass(Query, [
+    {
+      key: 'string',
+      value: function string(addition) {
+        var query = Object.assign({}, this.prequery, addition)
+        return queryjoin(query)
+      }
+    }
+  ])
+  return Query
+})()
+
+var LIMIT = 5000
+
+var hostV2 = function hostV2(account) {
+  return 'https://api.tumblr.com/v2/blog/' + account + '.tumblr.com'
+}
+var hostV1 = function hostV1(account) {
+  return 'https://' + account + '.tumblr.com/api/read/json'
+}
+var extractTotalV2 = function extractTotalV2(res) {
+  return res.response.total_posts
+}
+var extractTotalV1 = function extractTotalV1(res) {
+  return res['posts-total']
+}
+
+var Posts = HoCreateV2(Straight)
+
+var PostsRandom = HoCreateV2(Random)
+
+var PostsV1 = HoCreateV1(Straight, { limit: 50 })
+
+var PostsRandomV1 = HoCreateV1(Random, { limit: 50 })
+
 var avatar = function avatar(account, size) {
   throwInvalid(account, 'account')
-  return host(account) + '/avatar/' + (size || 64)
+  return hostV2(account) + '/avatar/' + (size || 64)
 }
 
 var info = function info(account, api_key) {
@@ -372,7 +416,7 @@ var info = function info(account, api_key) {
       throwInvalid(api_key, 'api_key')
     })
     .then(function() {
-      return jsonp(host(account) + '/info?api_key=' + api_key)
+      return fetchJson(hostV2(account) + '/info?api_key=' + api_key)
     })
 }
 
@@ -386,13 +430,9 @@ var posts = function posts(account, api_key, opts) {
       return new Query(opts, { api_key: api_key }).string()
     })
     .then(function(querystring) {
-      return jsonp(host(account) + '/posts?' + querystring)
+      return fetchJson(hostV2(account) + '/posts?' + querystring)
     })
 }
-
-var Posts = HoCreate(Straight)
-
-var PostsRandom = HoCreate(Random)
 
 var throwInvalid = function throwInvalid(target, name) {
   if (!target) {
@@ -405,22 +445,7 @@ var throwInvalid = function throwInvalid(target, name) {
   }
 }
 
-var host = function host(account) {
-  return 'https://api.tumblr.com/v2/blog/' + account + '.tumblr.com'
-}
-
-var extractTotal = function extractTotal(res) {
-  return res.response.total_posts
-}
-
-var validTotal = function validTotal(total) {
-  if (typeof total !== 'number') {
-    throw new Error('')
-  }
-  return total
-}
-
-function HoCreate(Hub) {
+function HoCreateV2(Hub) {
   return Create
 
   function Create(account, api_key, opts) {
@@ -432,14 +457,14 @@ function HoCreate(Hub) {
       .then(function() {
         return {
           query: new Query(opts, { api_key: api_key }),
-          path: host(account) + '/posts'
+          path: hostV2(account) + '/posts'
         }
       })
       .then(function(_ref) {
         var query = _ref.query,
           path = _ref.path
-        return jsonp(path + '?' + query.string({ limit: 1 }))
-          .then(extractTotal)
+        return fetchJson(path + '?' + query.string({ limit: 1 }))
+          .then(extractTotalV2)
           .then(validTotal)
           .then(function(total) {
             return { total: total, query: query, path: path }
@@ -452,19 +477,71 @@ function HoCreate(Hub) {
         return new Hub(total, function(addition) {
           var querystring = query.string(addition)
           var src = path + '?' + querystring
-          return jsonp(src)
+          return fetchJson(src)
         })
       })
       .then(create)
   }
 }
 
-var index = Object.freeze({
+function HoCreateV1(Hub, hubopts) {
+  return Create
+
+  function Create(account, opts) {
+    return Promise.resolve()
+      .then(function() {
+        throwInvalid(account, 'account')
+      })
+      .then(function() {
+        return {
+          query: new Query(opts),
+          path: hostV1(account)
+        }
+      })
+      .then(function(_ref3) {
+        var query = _ref3.query,
+          path = _ref3.path
+        return jsonp(path + '?' + query.string({ num: 0 }), LIMIT)
+          .then(extractTotalV1)
+          .then(validTotal)
+          .then(function(total) {
+            return { total: total, query: query, path: path }
+          })
+      })
+      .then(function(_ref4) {
+        var total = _ref4.total,
+          query = _ref4.query,
+          path = _ref4.path
+        return new Hub(
+          total,
+          function(_ref5) {
+            var offset = _ref5.offset,
+              limit = _ref5.limit
+
+            var querystring = query.string({ start: offset, num: limit })
+            var src = path + '?' + querystring
+            return jsonp(src, LIMIT)
+          },
+          hubopts
+        )
+      })
+      .then(create)
+  }
+}
+
+var tumblr = Object.freeze({
+  Posts: Posts,
+  PostsRandom: PostsRandom,
+  PostsV1: PostsV1,
+  PostsRandomV1: PostsRandomV1,
   avatar: avatar,
   info: info,
-  posts: posts,
-  Posts: Posts,
-  PostsRandom: PostsRandom
+  posts: posts
 })
 
-exports.tumblr = index
+var twitter = Object.freeze({})
+
+exports.facebook = facebook
+exports.instagram = instagram
+exports.tumblr = tumblr
+exports.twitter = twitter
