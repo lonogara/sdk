@@ -5,9 +5,9 @@ var facebook = Object.freeze({})
 
 var instagram = Object.freeze({})
 
-var throwTotal = function throwTotal(total) {
+var throwNumber = function throwNumber(total, name) {
   if (typeof total !== 'number') {
-    throw new TypeError('hub first argument must be "number"')
+    throw new TypeError('hub option "' + name + '" must be "number"')
   }
 }
 
@@ -86,23 +86,20 @@ var slicedToArray = (function() {
 })()
 
 var Straight = (function() {
-  function Straight(total, cb) {
-    var opts =
-      arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {}
+  function Straight(opts, cb) {
     classCallCheck(this, Straight)
 
-    throwTotal(total)
+    throwNumber(opts.total, 'total')
+    throwNumber(opts.limit, 'limit')
     throwCallback(cb)
 
     this._done = false
     this._offset = 0
 
-    this._lastOffset = total - 1
+    this._lastOffset = opts.total - 1
+    this._limit = opts.limit
+    this._plus = opts.limit - 1
     this._cb = cb
-
-    var limit = opts.limit || 20
-    this._limit = limit
-    this._plus = limit - 1
   }
 
   createClass(Straight, [
@@ -181,22 +178,20 @@ function generateFromTo(from, to) {
 }
 
 var Random = (function() {
-  function Random(total, cb) {
-    var opts =
-      arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {}
+  function Random(opts, cb) {
     classCallCheck(this, Random)
 
-    throwTotal(total)
+    throwNumber(opts.total, 'total')
+    throwNumber(opts.limit, 'limit')
     throwCallback(cb)
 
     this._done = false
     this._store = new Set()
 
-    this._total = total
-    this._lastOffset = total - 1
+    this._total = opts.total
+    this._lastOffset = opts.total - 1
+    this._limit = opts.limit
     this._cb = cb
-
-    this._limit = opts.limit || 20
   }
 
   createClass(Random, [
@@ -373,8 +368,9 @@ var Query = (function() {
   return Query
 })()
 
-var LIMIT = 5000
-
+var TIMEOUT = 5000
+var LIMIT_V2 = 20
+var LIMIT_V1 = 50
 var hostV2 = function hostV2(account) {
   return 'https://api.tumblr.com/v2/blog/' + account + '.tumblr.com'
 }
@@ -389,12 +385,9 @@ var extractTotalV1 = function extractTotalV1(res) {
 }
 
 var Posts = HoCreateV2(Straight)
-
 var PostsRandom = HoCreateV2(Random)
-
-var PostsV1 = HoCreateV1(Straight, { limit: 50 })
-
-var PostsRandomV1 = HoCreateV1(Random, { limit: 50 })
+var PostsV1 = HoCreateV1(Straight)
+var PostsRandomV1 = HoCreateV1(Random)
 
 var avatar = function avatar(account, size) {
   throwInvalid(account, 'account')
@@ -412,35 +405,26 @@ var info = function info(account, api_key) {
     })
 }
 
-var posts = function posts(account, api_key, opts) {
+var posts = function posts(account, api_key, query) {
   return Promise.resolve()
     .then(function() {
       throwInvalid(account, 'account')
       throwInvalid(api_key, 'api_key')
     })
     .then(function() {
-      return new Query(opts, { api_key: api_key }).string()
+      return new Query(query, { api_key: api_key }).string()
     })
     .then(function(querystring) {
       return fetchJson(hostV2(account) + '/posts?' + querystring)
     })
 }
 
-var throwInvalid = function throwInvalid(target, name) {
-  if (!target) {
-    throw new Error('supplier.Tumblr require ' + name)
-  }
-  if (typeof target !== 'string') {
-    throw new TypeError(
-      'supplier.Tumblr argument ' + name + ' must be "string"'
-    )
-  }
-}
-
 function HoCreateV2(Hub) {
-  return Create
-
-  function Create(account, api_key, opts) {
+  return function(_ref) {
+    var account = _ref.account,
+      api_key = _ref.api_key,
+      query = _ref.query,
+      limit = _ref.limit
     return Promise.resolve()
       .then(function() {
         throwInvalid(account, 'account')
@@ -448,25 +432,29 @@ function HoCreateV2(Hub) {
       })
       .then(function() {
         return {
-          query: new Query(opts, { api_key: api_key }),
+          query: new Query(query, { api_key: api_key }),
           path: hostV2(account) + '/posts'
         }
       })
-      .then(function(_ref) {
-        var query = _ref.query,
-          path = _ref.path
+      .then(function(_ref2) {
+        var query = _ref2.query,
+          path = _ref2.path
         return fetchJson(path + '?' + query.string({ limit: 1 }))
           .then(extractTotalV2)
           .then(validTotal)
           .then(function(total) {
-            return { total: total, query: query, path: path }
+            return {
+              opts: { total: total, limit: limit || LIMIT_V2 },
+              query: query,
+              path: path
+            }
           })
       })
-      .then(function(_ref2) {
-        var total = _ref2.total,
-          query = _ref2.query,
-          path = _ref2.path
-        return new Hub(total, function(addition) {
+      .then(function(_ref3) {
+        var opts = _ref3.opts,
+          query = _ref3.query,
+          path = _ref3.path
+        return new Hub(opts, function(addition) {
           var querystring = query.string(addition)
           var src = path + '?' + querystring
           return fetchJson(src)
@@ -476,48 +464,61 @@ function HoCreateV2(Hub) {
   }
 }
 
-function HoCreateV1(Hub, hubopts) {
-  return Create
-
-  function Create(account, opts) {
+function HoCreateV1(Hub) {
+  return function(_ref4) {
+    var account = _ref4.account,
+      query = _ref4.query,
+      limit = _ref4.limit,
+      timeout = _ref4.timeout
     return Promise.resolve()
       .then(function() {
         throwInvalid(account, 'account')
       })
       .then(function() {
         return {
-          query: new Query(opts),
+          query: new Query(query),
           path: hostV1(account)
         }
       })
-      .then(function(_ref3) {
-        var query = _ref3.query,
-          path = _ref3.path
-        return jsonp(path + '?' + query.string({ num: 0 }), LIMIT)
+      .then(function(_ref5) {
+        var query = _ref5.query,
+          path = _ref5.path
+        return jsonp(path + '?' + query.string({ num: 0 }), timeout || TIMEOUT)
           .then(extractTotalV1)
           .then(validTotal)
           .then(function(total) {
-            return { total: total, query: query, path: path }
+            return {
+              opts: { total: total, limit: limit || LIMIT_V1 },
+              query: query,
+              path: path
+            }
           })
       })
-      .then(function(_ref4) {
-        var total = _ref4.total,
-          query = _ref4.query,
-          path = _ref4.path
-        return new Hub(
-          total,
-          function(_ref5) {
-            var offset = _ref5.offset,
-              limit = _ref5.limit
+      .then(function(_ref6) {
+        var opts = _ref6.opts,
+          query = _ref6.query,
+          path = _ref6.path
+        return new Hub(opts, function(_ref7) {
+          var offset = _ref7.offset,
+            limit = _ref7.limit
 
-            var querystring = query.string({ start: offset, num: limit })
-            var src = path + '?' + querystring
-            return jsonp(src, LIMIT)
-          },
-          hubopts
-        )
+          var querystring = query.string({ start: offset, num: limit })
+          var src = path + '?' + querystring
+          return jsonp(src, timeout || TIMEOUT)
+        })
       })
       .then(create)
+  }
+}
+
+function throwInvalid(target, name) {
+  if (!target) {
+    throw new Error('supplier.Tumblr require ' + name)
+  }
+  if (typeof target !== 'string') {
+    throw new TypeError(
+      'supplier.Tumblr argument ' + name + ' must be "string"'
+    )
   }
 }
 

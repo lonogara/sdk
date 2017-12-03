@@ -1,19 +1,18 @@
-import { throwTotal, throwCallback } from './common.js'
+import { throwNumber, throwCallback } from './common.js'
 
 export default class Straight {
-  constructor(total, cb, opts = {}) {
-    throwTotal(total)
+  constructor(opts, cb) {
+    throwNumber(opts.total, 'total')
+    throwNumber(opts.limit, 'limit')
     throwCallback(cb)
 
     this._done = false
     this._offset = 0
 
-    this._lastOffset = total - 1
+    this._lastOffset = opts.total - 1
+    this._limit = opts.limit
+    this._plus = opts.limit - 1
     this._cb = cb
-
-    const limit = opts.limit || 20
-    this._limit = limit
-    this._plus = limit - 1
   }
 
   _isReturn() {

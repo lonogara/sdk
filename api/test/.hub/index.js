@@ -9,12 +9,12 @@ describe(`hub:Hubs`, () => {
 
   it(`Straight`, () => {
     const Straight = rewire(`../../src/.hub/Straight.js`).default
-    test()
-    test({ limit: 10 })
+    test({ total, limit: 20 })
+    test({ total, limit: 10 })
 
-    function test(opts = {}) {
+    function test(opts) {
       const cb = sinon.stub().returns(cbValue)
-      const hub = new Straight(total, cb, opts)
+      const hub = new Straight(opts, cb)
 
       const array = [...loop(hub)]
       array.forEach(value => assert.deepStrictEqual(value, cbValue))
@@ -30,12 +30,12 @@ describe(`hub:Hubs`, () => {
 
   it(`Random`, () => {
     const Random = rewire(`../../src/.hub/Random.js`).default
-    test()
-    test({ limit: 50 })
+    test({ total, limit: 20 })
+    test({ total, limit: 50 })
 
-    function test(opts = {}) {
+    function test(opts) {
       const cb = sinon.stub().returns(cbValue)
-      const hub = new Random(total, cb, opts)
+      const hub = new Random(opts, cb)
 
       const array = [...loop(hub)]
       array.forEach(value => assert.deepStrictEqual(value, cbValue))
@@ -66,31 +66,46 @@ describe(`hub:throws`, () => {
   const modules = rewire(`../../src/.hub`)
   const hubKeys = ['Straight', 'Random']
 
-  const first = 1
+  const total = 100
+  const limit = 10
   const second = () => {}
 
-  it(`first argument`, () => {
+  it(`opts.total`, () => {
     hubKeys.forEach(key => throws(modules[key]))
 
     function throws(Hub) {
       const unNumbers = [undefined, null, true, 'string', {}, [], () => {}]
-      unNumbers.forEach(first =>
+      unNumbers.forEach(total =>
         assert.throws(
-          () => new Hub(first, second),
-          /hub first argument must be "number"/
+          () => new Hub({ total, limit }, second),
+          /hub option "total" must be "number"/
         )
       )
     }
   })
 
-  it(`second argument`, () => {
+  it(`opts.limit`, () => {
+    hubKeys.forEach(key => throws(modules[key]))
+
+    function throws(Hub) {
+      const unNumbers = [undefined, null, true, 'string', {}, [], () => {}]
+      unNumbers.forEach(limit =>
+        assert.throws(
+          () => new Hub({ total, limit }, second),
+          /hub option "limit" must be "number"/
+        )
+      )
+    }
+  })
+
+  it(`cb`, () => {
     hubKeys.forEach(key => throws(modules[key]))
 
     function throws(Hub) {
       const unFunctions = [undefined, null, true, 'string', 1, {}, []]
       unFunctions.forEach(second =>
         assert.throws(
-          () => new Hub(first, second),
+          () => new Hub({ total, limit }, second),
           /hub second argument must be "function"/
         )
       )

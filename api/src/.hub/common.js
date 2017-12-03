@@ -1,6 +1,6 @@
-export const throwTotal = total => {
+export const throwNumber = (total, name) => {
   if (typeof total !== 'number') {
-    throw new TypeError(`hub first argument must be "number"`)
+    throw new TypeError(`hub option "${name}" must be "number"`)
   }
 }
 

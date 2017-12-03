@@ -1,5 +1,5 @@
 import regeneratorRuntime from 'regenerator-runtime'
-import { throwTotal, throwCallback } from './common.js'
+import { throwNumber, throwCallback } from './common.js'
 
 function* generateFromTo(from, to) {
   let plus = 0
@@ -10,18 +10,18 @@ function* generateFromTo(from, to) {
 }
 
 export default class Random {
-  constructor(total, cb, opts = {}) {
-    throwTotal(total)
+  constructor(opts, cb) {
+    throwNumber(opts.total, 'total')
+    throwNumber(opts.limit, 'limit')
     throwCallback(cb)
 
     this._done = false
     this._store = new Set()
 
-    this._total = total
-    this._lastOffset = total - 1
+    this._total = opts.total
+    this._lastOffset = opts.total - 1
+    this._limit = opts.limit
     this._cb = cb
-
-    this._limit = opts.limit || 20
   }
 
   _value() {
