@@ -1,26 +1,25 @@
-// @flow
-import ChasingDots from './ChasingDots'
-import FadingCircle from './FadingCircle'
-import ThreeBounce from './ThreeBounce'
-import Circle from './Circle'
-import FoldingCube from './FoldingCube'
-import WanderingCubes from './WanderingCubes'
-import CubeGrid from './CubeGrid'
-import Pulse from './Pulse'
-import WaveLoading from './WaveLoading'
-import DoubleDounceLoading from './DoubleDounceLoading'
-import RotaingPlaneLoading from './RotaingPlaneLoading'
+import ChasingDots from './ChasingDots.jsx'
+import Circle from './Circle.jsx'
+import CubeGrid from './CubeGrid.jsx'
+import DoubleDounceLoading from './DoubleDounceLoading.jsx'
+import FadingCircle from './FadingCircle.jsx'
+import FoldingCube from './FoldingCube.jsx'
+import Pulse from './Pulse.jsx'
+import RotaingPlaneLoading from './RotaingPlaneLoading.jsx'
+import ThreeBounce from './ThreeBounce.jsx'
+import WanderingCubes from './WanderingCubes.jsx'
+import WaveLoading from './WaveLoading.jsx'
 
 export {
   ChasingDots,
   Circle,
   CubeGrid,
-  Pulse,
-  FadingCircle,
-  ThreeBounce,
-  FoldingCube,
-  WanderingCubes,
-  WaveLoading,
   DoubleDounceLoading,
-  RotaingPlaneLoading
+  FadingCircle,
+  FoldingCube,
+  Pulse,
+  RotaingPlaneLoading,
+  ThreeBounce,
+  WanderingCubes,
+  WaveLoading
 }

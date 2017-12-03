@@ -18,7 +18,7 @@ var SIZE = 100
 var OBJECT_COLOR = 'rgb(54, 73, 87)'
 var DURATION = 2
 
-var index = function() {
+var ChasingDots = function() {
   var props =
     arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
 
@@ -183,12 +183,14 @@ var getRange = function getRange(n) {
 }
 
 //
+// const SPEED = 1.2
+
 var SIZE$1 = 100
 // const BACKGROUND_COLOR = '#dddddd'
 var OBJECT_COLOR$1 = 'rgb(54, 73, 87)'
 var DURATION$1 = 1.2
 
-var index$1 = function() {
+var Circle = function() {
   var props =
     arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
   return React.createElement(
@@ -201,33 +203,30 @@ var index$1 = function() {
       }
     }),
     React.createElement(Circles, {
-      duration: props.duration || DURATION$1,
-      objectColor: props.objectColor || OBJECT_COLOR$1
+      objectColor: props.objectColor || OBJECT_COLOR$1,
+      duration: props.duration || DURATION$1
     })
   )
 }
 
 var COUNT = 12
-
 var Circles = function Circles(_ref) {
   var objectColor = _ref.objectColor,
     duration = _ref.duration
   return getRange(COUNT).map(function(i) {
     return React.createElement(
       'div',
-      a$1('CHILD_WRAP', {
+      a$1('CIRCLE_WRAP', {
         key: i,
-        style: {
-          transform: 'rotate(' + 360 * i / COUNT + 'deg)'
-        }
+        style: { transform: 'rotate(' + 360 / COUNT * (i + 1) + 'deg)' }
       }),
       React.createElement(
         'div',
-        a$1('CHILD', {
+        a$1('CIRCLE', {
           style: {
             backgroundColor: objectColor,
             animationDuration: duration + 's',
-            animationDelay: duration - duration * i / COUNT + 's'
+            animationDelay: duration / COUNT * i - duration + 's'
           }
         })
       )
@@ -236,174 +235,6 @@ var Circles = function Circles(_ref) {
 }
 
 var a$1 = Atra({
-  PARENT: {
-    style: {
-      position: 'relative',
-      display: 'inline-block'
-    }
-  },
-  CHILD_WRAP: {
-    style: {
-      position: 'absolute',
-      left: 0,
-      top: 0,
-      width: '100%',
-      height: '100%'
-    }
-  },
-  CHILD: {
-    style: {
-      // margin: `0 auto`,
-      margin: 'auto',
-      width: '15%',
-      height: '15%',
-      borderRadius: '100%',
-      animationName: Keyframes({
-        0: { opacity: 0 },
-        39: { opacity: 0 },
-        40: { opacity: 1 },
-        100: { opacity: 0 }
-      }),
-      animationIterationCount: 'infinite',
-      animationTimingFunction: 'ease-in-out',
-      animationFillMode: 'both'
-    }
-  }
-})
-
-//
-var assign$1 = Object.assign
-
-var SIZE$2 = 100
-// const BACKGROUND_COLOR = '#dddddd'
-var OBJECT_COLOR$2 = 'rgb(54, 73, 87)'
-var DURATION$2 = 1.4
-
-var index$2 = function() {
-  var props =
-    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
-
-  var parentSize = props.size || SIZE$2
-
-  var childSize = parentSize / 4
-  var childMutable = {
-    style: {
-      width: childSize,
-      height: childSize,
-      animationDuration: (props.duration || DURATION$2) + 's',
-      backgroundColor: props.objectColor || OBJECT_COLOR$2
-    }
-  }
-
-  return React.createElement(
-    'div',
-    a$2('PARENT', {
-      style: {
-        width: parentSize,
-        height: parentSize,
-        backgroundColor: props.backgroundColor
-      }
-    }),
-    React.createElement('div', a$2('CHILD_FIRST', childMutable)),
-    React.createElement('div', a$2('CHILD_SECOND', childMutable)),
-    React.createElement('div', a$2('CHILD_THIRD', childMutable))
-  )
-}
-
-var CHILD_STYLE$1 = {
-  position: 'relative',
-  top: '35%',
-  borderRadius: '100%',
-  display: 'inline-block',
-  animationName: Keyframes({
-    0: { transform: 'scale(0)' },
-    40: { transform: 'scale(1)' },
-    80: { transform: 'scale(0)' },
-    100: { transform: 'scale(0)' }
-  }),
-  animationTimingFunction: 'ease-in-out',
-  animationIterationCount: 'infinite',
-  animationFillMode: 'both'
-}
-
-var a$2 = Atra({
-  PARENT: {
-    style: {
-      position: 'relative',
-      display: 'inline-block',
-      textAlign: 'center'
-    }
-  },
-  CHILD_FIRST: {
-    style: assign$1({}, CHILD_STYLE$1, {
-      animationDelay: '-0.32s'
-    })
-  },
-  CHILD_SECOND: {
-    style: assign$1({}, CHILD_STYLE$1, {
-      animationDelay: '-0.16s'
-    })
-  },
-  CHILD_THIRD: {
-    style: assign$1({}, CHILD_STYLE$1, {
-      animationDelay: '0s'
-    })
-  }
-})
-
-//
-// const SPEED = 1.2
-
-var SIZE$3 = 100
-// const BACKGROUND_COLOR = '#dddddd'
-var OBJECT_COLOR$3 = 'rgb(54, 73, 87)'
-var DURATION$3 = 1.2
-
-var index$3 = function() {
-  var props =
-    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
-  return React.createElement(
-    'div',
-    a$3('PARENT', {
-      style: {
-        width: props.size || SIZE$3,
-        height: props.size || SIZE$3,
-        backgroundColor: props.backgroundColor
-      }
-    }),
-    React.createElement(Circles$1, {
-      objectColor: props.objectColor || OBJECT_COLOR$3,
-      duration: props.duration || DURATION$3
-    })
-  )
-}
-
-var COUNT$1 = 12
-var Circles$1 = function Circles(_ref) {
-  var objectColor = _ref.objectColor,
-    duration = _ref.duration
-  return getRange(COUNT$1).map(function(i) {
-    return React.createElement(
-      'div',
-      a$3('CIRCLE_WRAP', {
-        key: i,
-        style: { transform: 'rotate(' + 360 / COUNT$1 * (i + 1) + 'deg)' }
-      }),
-      React.createElement(
-        'div',
-        a$3('CIRCLE', {
-          style: {
-            backgroundColor: objectColor,
-            animationDuration: duration + 's',
-            animationDelay: duration / COUNT$1 * i - duration + 's'
-          }
-        })
-      )
-    )
-  })
-}
-
-var a$3 = Atra({
   PARENT: {
     style: {
       position: 'relative',
@@ -440,21 +271,259 @@ var a$3 = Atra({
 })
 
 //
+var SIZE$2 = 100
+// const BACKGROUND_COLOR = '#dddddd'
+var OBJECT_COLOR$2 = 'rgb(54, 73, 87)'
+var DURATION$2 = 1.5
+
+var CubeGrid = function() {
+  var props =
+    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
+  return React.createElement(
+    'div',
+    a$2('PARENT', {
+      style: {
+        width: props.size || SIZE$2,
+        height: props.size || SIZE$2,
+        backgroundColor: props.backgroundColor
+      }
+    }),
+    React.createElement(Cubes, {
+      objectColor: props.objectColor || OBJECT_COLOR$2,
+      duration: props.duration || DURATION$2
+    })
+  )
+}
+
+var CUBES = [0.5, 0.75, 1, 0.25, 0.5, 0.75, 0, 0.25, 0.5]
+
+var Cubes = function Cubes(_ref) {
+  var objectColor = _ref.objectColor,
+    duration = _ref.duration
+  return CUBES.map(function(c, i) {
+    return React.createElement(
+      'div',
+      a$2('CUBE', {
+        key: i,
+        style: {
+          backgroundColor: objectColor,
+          animationDuration: duration + 's',
+          animationDelay: (duration - 3) / 3 * c + 's'
+        }
+      })
+    )
+  })
+}
+
+var a$2 = Atra({
+  PARENT: {
+    style: {
+      position: 'relative',
+      display: 'inline-block'
+    }
+  },
+  CUBE: {
+    style: {
+      width: '33.33%',
+      height: '33.33%',
+      float: 'left',
+      animationName: Keyframes({
+        //   0: { transform: `scale3d(1, 1, 1)` },
+        //  35: { transform: `scale3d(0, 0, 1)` },
+        //  70: { transform: `scale3d(1, 1, 1)` },
+        // 100: { transform: `scale3d(1, 1, 1)` }
+
+        // 0: { transform: `scale(1)` },
+        35: { transform: 'scale(0)' },
+        70: {
+          transform: 'scale(1)'
+          // 100: { transform: `scale(1)` }
+        }
+      }),
+      animationIterationCount: 'infinite',
+      animationTimingFunction: 'ease-in-out'
+    }
+  }
+})
+
+//
+var assign$1 = Object.assign
+
+var SIZE$3 = 100
+// const BACKGROUND_COLOR = '#dddddd'
+var OBJECT_COLOR$3 = 'rgb(54, 73, 87)'
+var DURATION$3 = 2
+
+var DoubleDounceLoading = function() {
+  var props =
+    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
+  return React.createElement(
+    'div',
+    a$3('PARENT', {
+      style: {
+        width: props.size || SIZE$3,
+        height: props.size || SIZE$3,
+        backgroundColor: props.backgroundColor
+      }
+    }),
+    React.createElement(
+      'div',
+      a$3('CHILD_FIRST', {
+        style: {
+          backgroundColor: props.objectColor || OBJECT_COLOR$3,
+          animationDuration: (props.duration || DURATION$3) + 's'
+        }
+      })
+    ),
+    React.createElement(
+      'div',
+      a$3('CHILD_SECOND', {
+        style: {
+          backgroundColor: props.objectColor || OBJECT_COLOR$3,
+          animationDuration: (props.duration || DURATION$3) + 's'
+        }
+      })
+    )
+  )
+}
+
+var CHILD_STYLE$1 = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  borderRadius: '50%',
+  opacity: 0.6,
+  animationName: Keyframes({
+    0: { transform: 'scale(0)' },
+    50: { transform: 'scale(1)' },
+    100: { transform: 'scale(0)' }
+  }),
+  animationIterationCount: 'infinite',
+  animationTimingFunction: 'ease-in-out'
+}
+
+var a$3 = Atra({
+  PARENT: {
+    style: {
+      position: 'relative',
+      display: 'inline-block'
+    }
+  },
+  CHILD_FIRST: {
+    style: CHILD_STYLE$1
+  },
+  CHILD_SECOND: {
+    style: assign$1({}, CHILD_STYLE$1, { animationDelay: '-1s' })
+  }
+})
+
+//
 var SIZE$4 = 100
 // const BACKGROUND_COLOR = '#dddddd'
 var OBJECT_COLOR$4 = 'rgb(54, 73, 87)'
-var DURATION$4 = 2.4
+var DURATION$4 = 1.2
 
-var index$4 = function() {
+var FadingCircle = function() {
+  var props =
+    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
+  return React.createElement(
+    'div',
+    a$4('PARENT', {
+      style: {
+        width: props.size || SIZE$4,
+        height: props.size || SIZE$4,
+        backgroundColor: props.backgroundColor
+      }
+    }),
+    React.createElement(Circles$1, {
+      duration: props.duration || DURATION$4,
+      objectColor: props.objectColor || OBJECT_COLOR$4
+    })
+  )
+}
+
+var COUNT$1 = 12
+
+var Circles$1 = function Circles(_ref) {
+  var objectColor = _ref.objectColor,
+    duration = _ref.duration
+  return getRange(COUNT$1).map(function(i) {
+    return React.createElement(
+      'div',
+      a$4('CHILD_WRAP', {
+        key: i,
+        style: {
+          transform: 'rotate(' + 360 * i / COUNT$1 + 'deg)'
+        }
+      }),
+      React.createElement(
+        'div',
+        a$4('CHILD', {
+          style: {
+            backgroundColor: objectColor,
+            animationDuration: duration + 's',
+            animationDelay: duration - duration * i / COUNT$1 + 's'
+          }
+        })
+      )
+    )
+  })
+}
+
+var a$4 = Atra({
+  PARENT: {
+    style: {
+      position: 'relative',
+      display: 'inline-block'
+    }
+  },
+  CHILD_WRAP: {
+    style: {
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      width: '100%',
+      height: '100%'
+    }
+  },
+  CHILD: {
+    style: {
+      // margin: `0 auto`,
+      margin: 'auto',
+      width: '15%',
+      height: '15%',
+      borderRadius: '100%',
+      animationName: Keyframes({
+        0: { opacity: 0 },
+        39: { opacity: 0 },
+        40: { opacity: 1 },
+        100: { opacity: 0 }
+      }),
+      animationIterationCount: 'infinite',
+      animationTimingFunction: 'ease-in-out',
+      animationFillMode: 'both'
+    }
+  }
+})
+
+//
+var SIZE$5 = 100
+// const BACKGROUND_COLOR = '#dddddd'
+var OBJECT_COLOR$5 = 'rgb(54, 73, 87)'
+var DURATION$5 = 2.4
+
+var FoldingCube = function() {
   var props =
     arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
 
-  var parentSize = props.size || SIZE$4
+  var parentSize = props.size || SIZE$5
   var wrapSize = parentSize / Math.SQRT2 - 1
 
   return React.createElement(
     'div',
-    a$4('PARENT', {
+    a$5('PARENT', {
       style: {
         width: parentSize,
         height: parentSize,
@@ -463,15 +532,15 @@ var index$4 = function() {
     }),
     React.createElement(
       'div',
-      a$4('WRAP', {
+      a$5('WRAP', {
         style: {
           width: wrapSize,
           height: wrapSize
         }
       }),
-      React.createElement(Cubes, {
-        duration: props.duration || DURATION$4,
-        objectColor: props.objectColor || OBJECT_COLOR$4
+      React.createElement(Cubes$1, {
+        duration: props.duration || DURATION$5,
+        objectColor: props.objectColor || OBJECT_COLOR$5
       })
     )
   )
@@ -479,11 +548,11 @@ var index$4 = function() {
 
 var cubes = [0, 1, 3, 2]
 
-var Cubes = function Cubes(props) {
+var Cubes$1 = function Cubes(props) {
   return cubes.map(function(i) {
     return React.createElement(
       'div',
-      a$4('CHILD_WRAP', {
+      a$5('CHILD_WRAP', {
         key: i,
         style: {
           transform: transform({
@@ -494,7 +563,7 @@ var Cubes = function Cubes(props) {
       }),
       React.createElement(
         'div',
-        a$4('CHILD', {
+        a$5('CHILD', {
           style: {
             backgroundColor: props.objectColor,
             animationDuration: props.duration + 's',
@@ -533,7 +602,7 @@ var anim3 = {
   opacity: 0
 }
 
-var a$4 = Atra({
+var a$5 = Atra({
   PARENT: {
     style: {
       position: 'relative',
@@ -582,24 +651,224 @@ var a$4 = Atra({
 })
 
 //
-var SIZE$5 = 100
+var SIZE$6 = 100
 // const BACKGROUND_COLOR = '#dddddd'
-var OBJECT_COLOR$5 = 'rgb(54, 73, 87)'
-var DURATION$5 = 1.8
+var OBJECT_COLOR$6 = 'rgb(54, 73, 87)'
+var DURATION$6 = 1
 
-var index$5 = function() {
+var Pulse = function() {
+  var props =
+    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
+  return React.createElement(
+    'div',
+    a$6('PARENT', {
+      style: {
+        width: props.size || SIZE$6,
+        height: props.size || SIZE$6,
+        backgroundColor: props.backgroundColor
+      }
+    }),
+    React.createElement(
+      'div',
+      a$6('CHILD', {
+        style: {
+          backgroundColor: props.objectColor || OBJECT_COLOR$6,
+          animationDuration: (props.duration || DURATION$6) + 's'
+        }
+      })
+    )
+  )
+}
+
+var a$6 = Atra({
+  PARENT: {
+    style: {
+      position: 'relative',
+      display: 'inline-block'
+    }
+  },
+  CHILD: {
+    style: {
+      height: '100%',
+      borderRadius: '100%',
+      animationName: Keyframes({
+        0: { transform: 'scale(0)' },
+        100: { transform: 'scale(1)', opacity: 0 }
+      }),
+      animationTimingFunction: 'ease-in-out',
+      animationIterationCount: 'infinite'
+    }
+  }
+})
+
+//
+var SIZE$7 = 100
+// const BACKGROUND_COLOR = '#dddddd'
+var OBJECT_COLOR$7 = 'rgb(54, 73, 87)'
+var DURATION$7 = 1.2
+
+var RotaingPlaneLoading = function() {
+  var props =
+    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
+  return React.createElement(
+    'div',
+    a$7('PARENT', {
+      style: {
+        width: props.size || SIZE$7,
+        height: props.size || SIZE$7,
+        backgroundColor: props.backgroundColor
+      }
+    }),
+    React.createElement(
+      'div',
+      a$7('CHILD', {
+        style: {
+          backgroundColor: props.objectColor || OBJECT_COLOR$7,
+          animationDuration: (props.duration || DURATION$7) + 's'
+        }
+      })
+    )
+  )
+}
+
+var a$7 = Atra({
+  PARENT: {
+    style: {
+      position: 'relative',
+      display: 'inline-block'
+    }
+  },
+  CHILD: {
+    style: {
+      height: '100%',
+      animationName: Keyframes({
+        0: {
+          transform: transform({
+            perspective: '120px',
+            rotateX: '0deg',
+            rotateY: '0deg'
+          })
+        },
+        50: {
+          transform: transform({
+            perspective: '120px',
+            rotateX: '-180.1deg',
+            rotateY: '0deg'
+          })
+        },
+        100: {
+          transform: transform({
+            perspective: '120px',
+            rotateX: '-180deg',
+            rotateY: '-179.9deg'
+          })
+        }
+      }),
+      animationTimingFunction: 'ease-in-out',
+      animationIterationCount: 'infinite'
+    }
+  }
+})
+
+//
+var assign$2 = Object.assign
+
+var SIZE$8 = 100
+// const BACKGROUND_COLOR = '#dddddd'
+var OBJECT_COLOR$8 = 'rgb(54, 73, 87)'
+var DURATION$8 = 1.4
+
+var ThreeBounce = function() {
   var props =
     arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
 
-  var parentSize = props.size || SIZE$5
+  var parentSize = props.size || SIZE$8
 
-  var cubeSize = parentSize / 4
-  var animationName = createAnim(parentSize * 0.75)
-  var duration = props.duration || DURATION$5
+  var childSize = parentSize / 4
+  var childMutable = {
+    style: {
+      width: childSize,
+      height: childSize,
+      animationDuration: (props.duration || DURATION$8) + 's',
+      backgroundColor: props.objectColor || OBJECT_COLOR$8
+    }
+  }
 
   return React.createElement(
     'div',
-    a$5('PARENT', {
+    a$8('PARENT', {
+      style: {
+        width: parentSize,
+        height: parentSize,
+        backgroundColor: props.backgroundColor
+      }
+    }),
+    React.createElement('div', a$8('CHILD_FIRST', childMutable)),
+    React.createElement('div', a$8('CHILD_SECOND', childMutable)),
+    React.createElement('div', a$8('CHILD_THIRD', childMutable))
+  )
+}
+
+var CHILD_STYLE$2 = {
+  position: 'relative',
+  top: '35%',
+  borderRadius: '100%',
+  display: 'inline-block',
+  animationName: Keyframes({
+    0: { transform: 'scale(0)' },
+    40: { transform: 'scale(1)' },
+    80: { transform: 'scale(0)' },
+    100: { transform: 'scale(0)' }
+  }),
+  animationTimingFunction: 'ease-in-out',
+  animationIterationCount: 'infinite',
+  animationFillMode: 'both'
+}
+
+var a$8 = Atra({
+  PARENT: {
+    style: {
+      position: 'relative',
+      display: 'inline-block',
+      textAlign: 'center'
+    }
+  },
+  CHILD_FIRST: {
+    style: assign$2({}, CHILD_STYLE$2, {
+      animationDelay: '-0.32s'
+    })
+  },
+  CHILD_SECOND: {
+    style: assign$2({}, CHILD_STYLE$2, {
+      animationDelay: '-0.16s'
+    })
+  },
+  CHILD_THIRD: {
+    style: assign$2({}, CHILD_STYLE$2, {
+      animationDelay: '0s'
+    })
+  }
+})
+
+//
+var SIZE$9 = 100
+// const BACKGROUND_COLOR = '#dddddd'
+var OBJECT_COLOR$9 = 'rgb(54, 73, 87)'
+var DURATION$9 = 1.8
+
+var WanderingCubes = function() {
+  var props =
+    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
+
+  var parentSize = props.size || SIZE$9
+
+  var cubeSize = parentSize / 4
+  var animationName = createAnim(parentSize * 0.75)
+  var duration = props.duration || DURATION$9
+
+  return React.createElement(
+    'div',
+    a$9('PARENT', {
       style: {
         width: parentSize,
         height: parentSize,
@@ -608,34 +877,34 @@ var index$5 = function() {
     }),
     React.createElement(
       'div',
-      a$5('CHILD', {
+      a$9('CHILD', {
         style: {
           animationName: animationName,
           animationDuration: duration + 's',
           animationDelay: duration + 's',
           width: cubeSize,
           height: cubeSize,
-          backgroundColor: props.objectColor || OBJECT_COLOR$5
+          backgroundColor: props.objectColor || OBJECT_COLOR$9
         }
       })
     ),
     React.createElement(
       'div',
-      a$5('CHILD', {
+      a$9('CHILD', {
         style: {
           animationName: animationName,
           animationDuration: duration + 's',
           animationDelay: duration / 2 + 's',
           width: cubeSize,
           height: cubeSize,
-          backgroundColor: props.objectColor || OBJECT_COLOR$5
+          backgroundColor: props.objectColor || OBJECT_COLOR$9
         }
       })
     )
   )
 }
 
-var a$5 = Atra({
+var a$9 = Atra({
   PARENT: {
     style: {
       position: 'relative',
@@ -693,154 +962,27 @@ var createAnim = function createAnim(cubeDistance) {
 }
 
 //
-var SIZE$6 = 100
+var SIZE$10 = 100
 // const BACKGROUND_COLOR = '#dddddd'
-var OBJECT_COLOR$6 = 'rgb(54, 73, 87)'
-var DURATION$6 = 1.5
+var OBJECT_COLOR$10 = 'rgb(54, 73, 87)'
+var DURATION$10 = 1.2
 
-var index$6 = function() {
+var WaveLoading = function() {
   var props =
     arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
   return React.createElement(
     'div',
-    a$6('PARENT', {
+    a$10('PARENT', {
       style: {
-        width: props.size || SIZE$6,
-        height: props.size || SIZE$6,
-        backgroundColor: props.backgroundColor
-      }
-    }),
-    React.createElement(Cubes$1, {
-      objectColor: props.objectColor || OBJECT_COLOR$6,
-      duration: props.duration || DURATION$6
-    })
-  )
-}
-
-var CUBES = [0.5, 0.75, 1, 0.25, 0.5, 0.75, 0, 0.25, 0.5]
-
-var Cubes$1 = function Cubes(_ref) {
-  var objectColor = _ref.objectColor,
-    duration = _ref.duration
-  return CUBES.map(function(c, i) {
-    return React.createElement(
-      'div',
-      a$6('CUBE', {
-        key: i,
-        style: {
-          backgroundColor: objectColor,
-          animationDuration: duration + 's',
-          animationDelay: (duration - 3) / 3 * c + 's'
-        }
-      })
-    )
-  })
-}
-
-var a$6 = Atra({
-  PARENT: {
-    style: {
-      position: 'relative',
-      display: 'inline-block'
-    }
-  },
-  CUBE: {
-    style: {
-      width: '33.33%',
-      height: '33.33%',
-      float: 'left',
-      animationName: Keyframes({
-        //   0: { transform: `scale3d(1, 1, 1)` },
-        //  35: { transform: `scale3d(0, 0, 1)` },
-        //  70: { transform: `scale3d(1, 1, 1)` },
-        // 100: { transform: `scale3d(1, 1, 1)` }
-
-        // 0: { transform: `scale(1)` },
-        35: { transform: 'scale(0)' },
-        70: {
-          transform: 'scale(1)'
-          // 100: { transform: `scale(1)` }
-        }
-      }),
-      animationIterationCount: 'infinite',
-      animationTimingFunction: 'ease-in-out'
-    }
-  }
-})
-
-//
-var SIZE$7 = 100
-// const BACKGROUND_COLOR = '#dddddd'
-var OBJECT_COLOR$7 = 'rgb(54, 73, 87)'
-var DURATION$7 = 1
-
-var index$7 = function() {
-  var props =
-    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
-  return React.createElement(
-    'div',
-    a$7('PARENT', {
-      style: {
-        width: props.size || SIZE$7,
-        height: props.size || SIZE$7,
-        backgroundColor: props.backgroundColor
-      }
-    }),
-    React.createElement(
-      'div',
-      a$7('CHILD', {
-        style: {
-          backgroundColor: props.objectColor || OBJECT_COLOR$7,
-          animationDuration: (props.duration || DURATION$7) + 's'
-        }
-      })
-    )
-  )
-}
-
-var a$7 = Atra({
-  PARENT: {
-    style: {
-      position: 'relative',
-      display: 'inline-block'
-    }
-  },
-  CHILD: {
-    style: {
-      height: '100%',
-      borderRadius: '100%',
-      animationName: Keyframes({
-        0: { transform: 'scale(0)' },
-        100: { transform: 'scale(1)', opacity: 0 }
-      }),
-      animationTimingFunction: 'ease-in-out',
-      animationIterationCount: 'infinite'
-    }
-  }
-})
-
-//
-var SIZE$8 = 100
-// const BACKGROUND_COLOR = '#dddddd'
-var OBJECT_COLOR$8 = 'rgb(54, 73, 87)'
-var DURATION$8 = 1.2
-
-var index$8 = function() {
-  var props =
-    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
-  return React.createElement(
-    'div',
-    a$8('PARENT', {
-      style: {
-        width: props.size || SIZE$8,
-        height: props.size || SIZE$8,
+        width: props.size || SIZE$10,
+        height: props.size || SIZE$10,
         backgroundColor: props.backgroundColor
       }
     }),
     React.createElement(Rects, {
-      size: props.size || SIZE$8,
-      objectColor: props.objectColor || OBJECT_COLOR$8,
-      duration: props.duration || DURATION$8
+      size: props.size || SIZE$10,
+      objectColor: props.objectColor || OBJECT_COLOR$10,
+      duration: props.duration || DURATION$10
     })
   )
 }
@@ -852,7 +994,7 @@ var Rects = function Rects(props) {
   return getRange(RECT_COUNT).map(function(index) {
     return React.createElement(
       'div',
-      a$8('RECT', {
+      a$10('RECT', {
         key: index,
         style: {
           width: props.size / 12,
@@ -868,7 +1010,7 @@ var Rects = function Rects(props) {
   })
 }
 
-var a$8 = Atra({
+var a$10 = Atra({
   PARENT: {
     style: {
       position: 'relative',
@@ -896,158 +1038,14 @@ var a$8 = Atra({
   }
 })
 
-//
-var assign$3 = Object.assign
-
-var SIZE$9 = 100
-// const BACKGROUND_COLOR = '#dddddd'
-var OBJECT_COLOR$9 = 'rgb(54, 73, 87)'
-var DURATION$9 = 2
-
-var index$9 = function() {
-  var props =
-    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
-  return React.createElement(
-    'div',
-    a$9('PARENT', {
-      style: {
-        width: props.size || SIZE$9,
-        height: props.size || SIZE$9,
-        backgroundColor: props.backgroundColor
-      }
-    }),
-    React.createElement(
-      'div',
-      a$9('CHILD_FIRST', {
-        style: {
-          backgroundColor: props.objectColor || OBJECT_COLOR$9,
-          animationDuration: (props.duration || DURATION$9) + 's'
-        }
-      })
-    ),
-    React.createElement(
-      'div',
-      a$9('CHILD_SECOND', {
-        style: {
-          backgroundColor: props.objectColor || OBJECT_COLOR$9,
-          animationDuration: (props.duration || DURATION$9) + 's'
-        }
-      })
-    )
-  )
-}
-
-var CHILD_STYLE$2 = {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  borderRadius: '50%',
-  opacity: 0.6,
-  animationName: Keyframes({
-    0: { transform: 'scale(0)' },
-    50: { transform: 'scale(1)' },
-    100: { transform: 'scale(0)' }
-  }),
-  animationIterationCount: 'infinite',
-  animationTimingFunction: 'ease-in-out'
-}
-
-var a$9 = Atra({
-  PARENT: {
-    style: {
-      position: 'relative',
-      display: 'inline-block'
-    }
-  },
-  CHILD_FIRST: {
-    style: CHILD_STYLE$2
-  },
-  CHILD_SECOND: {
-    style: assign$3({}, CHILD_STYLE$2, { animationDelay: '-1s' })
-  }
-})
-
-//
-var SIZE$10 = 100
-// const BACKGROUND_COLOR = '#dddddd'
-var OBJECT_COLOR$10 = 'rgb(54, 73, 87)'
-var DURATION$10 = 1.2
-
-var index$10 = function() {
-  var props =
-    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
-  return React.createElement(
-    'div',
-    a$10('PARENT', {
-      style: {
-        width: props.size || SIZE$10,
-        height: props.size || SIZE$10,
-        backgroundColor: props.backgroundColor
-      }
-    }),
-    React.createElement(
-      'div',
-      a$10('CHILD', {
-        style: {
-          backgroundColor: props.objectColor || OBJECT_COLOR$10,
-          animationDuration: (props.duration || DURATION$10) + 's'
-        }
-      })
-    )
-  )
-}
-
-var a$10 = Atra({
-  PARENT: {
-    style: {
-      position: 'relative',
-      display: 'inline-block'
-    }
-  },
-  CHILD: {
-    style: {
-      height: '100%',
-      animationName: Keyframes({
-        0: {
-          transform: transform({
-            perspective: '120px',
-            rotateX: '0deg',
-            rotateY: '0deg'
-          })
-        },
-        50: {
-          transform: transform({
-            perspective: '120px',
-            rotateX: '-180.1deg',
-            rotateY: '0deg'
-          })
-        },
-        100: {
-          transform: transform({
-            perspective: '120px',
-            rotateX: '-180deg',
-            rotateY: '-179.9deg'
-          })
-        }
-      }),
-      animationTimingFunction: 'ease-in-out',
-      animationIterationCount: 'infinite'
-    }
-  }
-})
-
-//
-
-exports.ChasingDots = index
-exports.Circle = index$3
-exports.CubeGrid = index$6
-exports.Pulse = index$7
-exports.FadingCircle = index$1
-exports.ThreeBounce = index$2
-exports.FoldingCube = index$4
-exports.WanderingCubes = index$5
-exports.WaveLoading = index$8
-exports.DoubleDounceLoading = index$9
-exports.RotaingPlaneLoading = index$10
+exports.ChasingDots = ChasingDots
+exports.Circle = Circle
+exports.CubeGrid = CubeGrid
+exports.DoubleDounceLoading = DoubleDounceLoading
+exports.FadingCircle = FadingCircle
+exports.FoldingCube = FoldingCube
+exports.Pulse = Pulse
+exports.RotaingPlaneLoading = RotaingPlaneLoading
+exports.ThreeBounce = ThreeBounce
+exports.WanderingCubes = WanderingCubes
+exports.WaveLoading = WaveLoading

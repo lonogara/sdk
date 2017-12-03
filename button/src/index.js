@@ -1,6 +1,6 @@
-import Camera from './Camera'
-import House from './House'
-import Post from './Post'
-import Question from './Question'
+import Camera from './Camera.jsx'
+import House from './House.jsx'
+import Post from './Post.jsx'
+import Question from './Question.jsx'
 
 export { Camera, House, Post, Question }

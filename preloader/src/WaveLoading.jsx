@@ -2,7 +2,7 @@
 import React from 'react'
 import Atra from 'atra'
 import Keyframes from 'create-keyframes'
-import { getRange } from '../util.js'
+import { getRange } from './util.js'
 
 const SIZE = 100
 // const BACKGROUND_COLOR = '#dddddd'

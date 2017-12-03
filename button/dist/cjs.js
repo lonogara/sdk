@@ -9,7 +9,7 @@ function _interopDefault(ex) {
 var React = _interopDefault(require('react'))
 var Atra = _interopDefault(require('atra'))
 
-var index = function(_ref) {
+var Camera = function(_ref) {
   var choised = _ref.choised
   return React.createElement(
     'svg',
@@ -77,7 +77,7 @@ var a = Atra({
   }
 })
 
-var index$1 = function(_ref) {
+var House = function(_ref) {
   var choised = _ref.choised
   return React.createElement(
     'svg',
@@ -107,7 +107,7 @@ var a$1 = Atra({
   }
 })
 
-var index$2 = function(_ref) {
+var Post = function(_ref) {
   var choised = _ref.choised
   return React.createElement(
     'svg',
@@ -152,7 +152,7 @@ var a$2 = Atra({
   }
 })
 
-var index$3 = function(_ref) {
+var Question = function(_ref) {
   var choised = _ref.choised
   return React.createElement(
     'svg',
@@ -198,7 +198,7 @@ var a$3 = Atra({
   }
 })
 
-exports.Camera = index
-exports.House = index$1
-exports.Post = index$2
-exports.Question = index$3
+exports.Camera = Camera
+exports.House = House
+exports.Post = Post
+exports.Question = Question

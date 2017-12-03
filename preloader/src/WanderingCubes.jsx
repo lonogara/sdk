@@ -2,7 +2,7 @@
 import React from 'react'
 import Atra from 'atra'
 import Keyframes from 'create-keyframes'
-import { transform } from '../util.js'
+import { transform } from './util.js'
 const { assign } = Object
 
 const SIZE = 100

@@ -102,9 +102,11 @@ function HoCreateV1(Hub) {
 
 function throwInvalid(target, name) {
   if (!target) {
-    throw new Error(`supplier.Tumblr require ${name}`)
+    throw new Error(`ligure-tool/api/tumblr require ${name}`)
   }
   if (typeof target !== 'string') {
-    throw new TypeError(`supplier.Tumblr argument ${name} must be "string"`)
+    throw new TypeError(
+      `ligure-tool/api/tumblr argument ${name} must be "string"`
+    )
   }
 }

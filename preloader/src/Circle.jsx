@@ -2,7 +2,9 @@
 import React from 'react'
 import Atra from 'atra'
 import Keyframes from 'create-keyframes'
-import { getRange } from '../util.js'
+import { getRange } from './util.js'
+
+// const SPEED = 1.2
 
 const SIZE = 100
 // const BACKGROUND_COLOR = '#dddddd'
@@ -28,31 +30,28 @@ export default (props: Props = {}) => (
   >
     <Circles
       {...{
-        duration: props.duration || DURATION,
-        objectColor: props.objectColor || OBJECT_COLOR
+        objectColor: props.objectColor || OBJECT_COLOR,
+        duration: props.duration || DURATION
       }}
     />
   </div>
 )
 
 const COUNT = 12
-
 const Circles = ({ objectColor, duration }) =>
   getRange(COUNT).map(i => (
     <div
-      {...a('CHILD_WRAP', {
+      {...a('CIRCLE_WRAP', {
         key: i,
-        style: {
-          transform: `rotate(${360 * i / COUNT}deg)`
-        }
+        style: { transform: `rotate(${360 / COUNT * (i + 1)}deg)` }
       })}
     >
       <div
-        {...a('CHILD', {
+        {...a('CIRCLE', {
           style: {
             backgroundColor: objectColor,
             animationDuration: `${duration}s`,
-            animationDelay: `${duration - duration * i / COUNT}s`
+            animationDelay: `${duration / COUNT * i - duration}s`
           }
         })}
       />
@@ -66,31 +65,31 @@ const a = Atra({
       display: 'inline-block'
     }
   },
-  CHILD_WRAP: {
+  CIRCLE_WRAP: {
     style: {
       position: 'absolute',
-      left: 0,
       top: 0,
+      left: 0,
       width: '100%',
       height: '100%'
     }
   },
-  CHILD: {
+  CIRCLE: {
     style: {
-      // margin: `0 auto`,
-      margin: `auto`,
+      margin: '0px auto',
       width: '15%',
       height: '15%',
-      borderRadius: `100%`,
-      animationName: Keyframes({
-        0: { opacity: 0 },
-        39: { opacity: 0 },
-        40: { opacity: 1 },
-        100: { opacity: 0 }
+      borderRadius: '100%',
+      // backgroundColor: 'var(--main-color)',
+      animation: Keyframes({
+        0: { transform: 'scale(0)' },
+        40: { transform: 'scale(1)' },
+        80: { transform: 'scale(0)' },
+        100: { transform: 'scale(0)' }
       }),
-      animationIterationCount: 'infinite',
       animationTimingFunction: 'ease-in-out',
-      animationFillMode: `both`
+      animationIterationCount: 'infinite',
+      animationFillMode: 'both'
     }
   }
 })

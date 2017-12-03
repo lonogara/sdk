@@ -1,7 +1,7 @@
 import React from 'react'
 import Atra from 'atra'
 
-var index = function(_ref) {
+var Camera = function(_ref) {
   var choised = _ref.choised
   return React.createElement(
     'svg',
@@ -69,7 +69,7 @@ var a = Atra({
   }
 })
 
-var index$1 = function(_ref) {
+var House = function(_ref) {
   var choised = _ref.choised
   return React.createElement(
     'svg',
@@ -99,7 +99,7 @@ var a$1 = Atra({
   }
 })
 
-var index$2 = function(_ref) {
+var Post = function(_ref) {
   var choised = _ref.choised
   return React.createElement(
     'svg',
@@ -144,7 +144,7 @@ var a$2 = Atra({
   }
 })
 
-var index$3 = function(_ref) {
+var Question = function(_ref) {
   var choised = _ref.choised
   return React.createElement(
     'svg',
@@ -190,9 +190,4 @@ var a$3 = Atra({
   }
 })
 
-export {
-  index as Camera,
-  index$1 as House,
-  index$2 as Post,
-  index$3 as Question
-}
+export { Camera, House, Post, Question }
