@@ -16,4 +16,4 @@ export default (markdown, components) =>
     .use(align)
     .use(blank)
     .use(hast2react, { createElement, components })
-    .process(markdown)
+    .processSync(markdown).contents

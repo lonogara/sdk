@@ -16,4 +16,5 @@ const processor = unified()
   .use(minify)
   .use(hast2html)
 
-export default markdown => processor.process(markdown)
+export default markdown =>
+  processor.process(markdown).then(({ contents }) => contents)

@@ -17,7 +17,10 @@ var processor = unified()
   .use(hast2html)
 
 var index = function(markdown) {
-  return processor.process(markdown)
+  return processor.process(markdown).then(function(_ref) {
+    var contents = _ref.contents
+    return contents
+  })
 }
 
 export { index as markdownToHtml }

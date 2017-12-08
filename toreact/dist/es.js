@@ -11,12 +11,21 @@ import align from '../../.packages/rehype-align'
 
 var createElement = react.createElement
 
-var index = function(html, components, imgasOpts) {
+var index = function(html) {
+  var opts =
+    arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {}
   return unified()
     .use(html2hast, { fragment: true })
-    .use(imgas, imgasOpts)
-    .use(hast2react, { createElement: createElement, components: components })
+    .use(imgas, opts.imgas)
+    .use(hast2react, {
+      createElement: createElement,
+      components: opts.components
+    })
     .process(html)
+    .then(function(_ref) {
+      var contents = _ref.contents
+      return contents
+    })
 }
 
 var createElement$1 = react.createElement
@@ -26,7 +35,7 @@ var index$1 = function(html, components) {
     .use(html2hast, { fragment: true })
     .use(blank)
     .use(hast2react, { createElement: createElement$1, components: components })
-    .process(html)
+    .processSync(html).contents
 }
 
 var createElement$2 = react.createElement
@@ -39,7 +48,7 @@ var index$2 = function(markdown, components) {
     .use(align)
     .use(blank)
     .use(hast2react, { createElement: createElement$2, components: components })
-    .process(markdown)
+    .processSync(markdown).contents
 }
 
 export {

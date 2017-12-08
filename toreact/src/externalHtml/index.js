@@ -10,4 +10,4 @@ export default (html, components) =>
     .use(html2hast, { fragment: true })
     .use(blank)
     .use(hast2react, { createElement, components })
-    .process(html)
+    .processSync(html).contents
