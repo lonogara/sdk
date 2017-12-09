@@ -1,5 +1,4 @@
-import hastUtilSelect from 'hast-util-select'
-const { selectAll } = hastUtilSelect
+import { selectAll } from 'hast-util-select'
 
 export default () => ast =>
   selectAll(`a`, ast).forEach(a => {
