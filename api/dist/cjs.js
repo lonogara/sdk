@@ -391,6 +391,7 @@ var extractTotalV2 = function extractTotalV2(res) {
 var extractTotalV1 = function extractTotalV1(res) {
   return res['posts-total']
 }
+var fetchOpts = { mode: 'cors' }
 
 var Posts = HoCreateV2(Straight)
 var PostsRandom = HoCreateV2(Random)
@@ -409,7 +410,7 @@ var info = function info(account, api_key) {
       throwInvalid(api_key, 'api_key')
     })
     .then(function() {
-      return fetchJson(hostV2(account) + '/info?api_key=' + api_key)
+      return fetchJson(hostV2(account) + '/info?api_key=' + api_key, fetchOpts)
     })
 }
 
@@ -423,7 +424,7 @@ var posts = function posts(account, api_key, query) {
       return new Query(query, { api_key: api_key }).string()
     })
     .then(function(querystring) {
-      return fetchJson(hostV2(account) + '/posts?' + querystring)
+      return fetchJson(hostV2(account) + '/posts?' + querystring, fetchOpts)
     })
 }
 
@@ -465,7 +466,7 @@ function HoCreateV2(Hub) {
         return new Hub(opts, function(addition) {
           var querystring = query.string(addition)
           var src = path + '?' + querystring
-          return fetchJson(src)
+          return fetchJson(src, fetchOpts)
         })
       })
       .then(create)
@@ -521,11 +522,11 @@ function HoCreateV1(Hub) {
 
 function throwInvalid(target, name) {
   if (!target) {
-    throw new Error('ligure-tool/api/tumblr require ' + name)
+    throw new Error('lonogara-tool/api/tumblr require ' + name)
   }
   if (typeof target !== 'string') {
     throw new TypeError(
-      'ligure-tool/api/tumblr argument ' + name + ' must be "string"'
+      'lonogara-tool/api/tumblr argument ' + name + ' must be "string"'
     )
   }
 }

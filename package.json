@@ -1,15 +1,17 @@
 {
-  "name": "ligure-tool",
+  "name": "lonogara-tool",
   "version": "0.0.0",
   "private": true,
-  "repository": "kthjm/ligure-tool",
+  "repository": "kthjm/lonogara-tool",
   "author": "kthjm <toxictoxer@gmail.com>",
   "main": "index.js",
+  "prettier": {
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true
+  },
   "nyc": {
-    "require": [
-      "babel-register",
-      "jsdom-global/register"
-    ],
+    "require": ["babel-register", "jsdom-global/register"],
     "include": [
       "api/src",
       "build/src",
@@ -88,7 +90,7 @@
     "npm-run-all": "^4.1.2",
     "nyc": "^11.1.0",
     "power-assert": "^1.4.4",
-    "prettier": "^1.9.1",
+    "prettier": "^1.9.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-test-renderer": "^16.2.0",
@@ -101,10 +103,5 @@
   },
   "peerDependencies": {
     "react": "^16.0.0"
-  },
-  "prettier": {
-    "tabWidth": 2,
-    "semi": false,
-    "singleQuote": true
   }
 }

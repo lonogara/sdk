@@ -2,7 +2,7 @@
 
 ### tumblr
 ```js
-import { tumblr } from 'ligure-tool/api'
+import { tumblr } from 'lonogara-tool/api'
 
 tumblr.avatar(account[, size])
 

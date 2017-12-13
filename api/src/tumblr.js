@@ -9,6 +9,7 @@ const hostV2 = account => `https://api.tumblr.com/v2/blog/${account}.tumblr.com`
 const hostV1 = account => `https://${account}.tumblr.com/api/read/json`
 const extractTotalV2 = res => res.response.total_posts
 const extractTotalV1 = res => res['posts-total']
+const fetchOpts = { mode: 'cors' }
 
 export const Posts = HoCreateV2(Straight)
 export const PostsRandom = HoCreateV2(Random)
@@ -26,7 +27,9 @@ export const info = (account, api_key) =>
       throwInvalid(account, 'account')
       throwInvalid(api_key, 'api_key')
     })
-    .then(() => fetchJson(`${hostV2(account)}/info?api_key=${api_key}`))
+    .then(() =>
+      fetchJson(`${hostV2(account)}/info?api_key=${api_key}`, fetchOpts)
+    )
 
 export const posts = (account, api_key, query) =>
   Promise.resolve()
@@ -35,7 +38,9 @@ export const posts = (account, api_key, query) =>
       throwInvalid(api_key, 'api_key')
     })
     .then(() => new Query(query, { api_key }).string())
-    .then(querystring => fetchJson(`${hostV2(account)}/posts?${querystring}`))
+    .then(querystring =>
+      fetchJson(`${hostV2(account)}/posts?${querystring}`, fetchOpts)
+    )
 
 function HoCreateV2(Hub) {
   return ({ account, api_key, query, limit }) =>
@@ -63,7 +68,7 @@ function HoCreateV2(Hub) {
           new Hub(opts, addition => {
             const querystring = query.string(addition)
             const src = `${path}?${querystring}`
-            return fetchJson(src)
+            return fetchJson(src, fetchOpts)
           })
       )
       .then(create)
@@ -102,11 +107,11 @@ function HoCreateV1(Hub) {
 
 function throwInvalid(target, name) {
   if (!target) {
-    throw new Error(`ligure-tool/api/tumblr require ${name}`)
+    throw new Error(`lonogara-tool/api/tumblr require ${name}`)
   }
   if (typeof target !== 'string') {
     throw new TypeError(
-      `ligure-tool/api/tumblr argument ${name} must be "string"`
+      `lonogara-tool/api/tumblr argument ${name} must be "string"`
     )
   }
 }
