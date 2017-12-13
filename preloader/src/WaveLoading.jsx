@@ -16,46 +16,38 @@ type Props = {
   duration?: number
 }
 
-export default (props: Props = {}) => (
-  <div
-    {...a('PARENT', {
-      style: {
-        width: props.size || SIZE,
-        height: props.size || SIZE,
-        backgroundColor: props.backgroundColor
-      }
-    })}
-  >
-    <Rects
-      {...{
-        size: props.size || SIZE,
-        objectColor: props.objectColor || OBJECT_COLOR,
-        duration: props.duration || DURATION
-      }}
-    />
+export default (props: Props = {}) =>
+  <div {...a('PARENT', {
+    style: {
+      width: props.size || SIZE,
+      height: props.size || SIZE,
+      backgroundColor: props.backgroundColor
+    }
+  })}>
+    <Rects {...{
+      size: props.size || SIZE,
+      objectColor: props.objectColor || OBJECT_COLOR,
+      duration: props.duration || DURATION
+    }} />
   </div>
-)
 
 const RECT_COUNT = 5
 const DELAY_RANGE = 0.4
 
-const Rects = props =>
-  getRange(RECT_COUNT).map(index => (
-    <div
-      {...a('RECT', {
-        key: index,
-        style: {
-          width: props.size / 12,
-          marginRight: props.size / 24,
-          left: props.size / 24 / 2,
-          backgroundColor: props.objectColor,
-          animationDuration: `${props.duration}s`,
-          animationDelay: `${DELAY_RANGE * index / (RECT_COUNT - 1) -
-            props.duration}s`
-        }
-      })}
-    />
-  ))
+const Rects = ({ size, objectColor, duration }) =>
+  getRange(RECT_COUNT).map(index =>
+    <div {...a('RECT', {
+      key: index,
+      style: {
+        width: size / 12,
+        marginRight: size / 24,
+        left: size / 24 / 2,
+        backgroundColor: objectColor,
+        animationDuration: `${duration}s`,
+        animationDelay: `${DELAY_RANGE * index / (RECT_COUNT - 1) - duration}s`
+      }
+    })} />
+  )
 
 const a = Atra({
   PARENT: {

@@ -16,48 +16,34 @@ type Props = {
   duration?: number
 }
 
-export default (props: Props = {}) => (
-  <div
-    {...a('PARENT', {
-      style: {
-        width: props.size || SIZE,
-        height: props.size || SIZE,
-        backgroundColor: props.backgroundColor
-      }
-    })}
-  >
-    <Circles
-      {...{
-        duration: props.duration || DURATION,
-        objectColor: props.objectColor || OBJECT_COLOR
-      }}
-    />
+export default (props: Props = {}) =>
+  <div {...a('PARENT', {
+    style: {
+      width: props.size || SIZE,
+      height: props.size || SIZE,
+      backgroundColor: props.backgroundColor
+    }
+  })}>
+    <Circles {...{
+      duration: props.duration || DURATION,
+      objectColor: props.objectColor || OBJECT_COLOR
+    }} />
   </div>
-)
 
 const COUNT = 12
 
 const Circles = ({ objectColor, duration }) =>
-  getRange(COUNT).map(i => (
-    <div
-      {...a('CHILD_WRAP', {
-        key: i,
+  getRange(COUNT).map(i =>
+    <div {...a('CHILD_WRAP', { key: i, style: { transform: `rotate(${360 * i / COUNT}deg)` } })}>
+      <div {...a('CHILD', {
         style: {
-          transform: `rotate(${360 * i / COUNT}deg)`
+          backgroundColor: objectColor,
+          animationDuration: `${duration}s`,
+          animationDelay: `${duration - duration * i / COUNT}s`
         }
-      })}
-    >
-      <div
-        {...a('CHILD', {
-          style: {
-            backgroundColor: objectColor,
-            animationDuration: `${duration}s`,
-            animationDelay: `${duration - duration * i / COUNT}s`
-          }
-        })}
-      />
+      })} />
     </div>
-  ))
+  )
 
 const a = Atra({
   PARENT: {

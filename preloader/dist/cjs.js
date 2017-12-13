@@ -34,11 +34,7 @@ var ChasingDots = function() {
     }),
     React.createElement(
       'div',
-      a('WRAP', {
-        style: {
-          animationDuration: duration + 's'
-        }
-      }),
+      a('WRAP', { style: { animationDuration: duration + 's' } }),
       React.createElement(
         'div',
         a('CHILD_FIRST', {
@@ -454,9 +450,7 @@ var Circles$1 = function Circles(_ref) {
       'div',
       a$4('CHILD_WRAP', {
         key: i,
-        style: {
-          transform: 'rotate(' + 360 * i / COUNT$1 + 'deg)'
-        }
+        style: { transform: 'rotate(' + 360 * i / COUNT$1 + 'deg)' }
       }),
       React.createElement(
         'div',
@@ -532,12 +526,7 @@ var FoldingCube = function() {
     }),
     React.createElement(
       'div',
-      a$5('WRAP', {
-        style: {
-          width: wrapSize,
-          height: wrapSize
-        }
-      }),
+      a$5('WRAP', { style: { width: wrapSize, height: wrapSize } }),
       React.createElement(Cubes$1, {
         duration: props.duration || DURATION$5,
         objectColor: props.objectColor || OBJECT_COLOR$5
@@ -548,7 +537,9 @@ var FoldingCube = function() {
 
 var cubes = [0, 1, 3, 2]
 
-var Cubes$1 = function Cubes(props) {
+var Cubes$1 = function Cubes(_ref) {
+  var duration = _ref.duration,
+    objectColor = _ref.objectColor
   return cubes.map(function(i) {
     return React.createElement(
       'div',
@@ -565,9 +556,9 @@ var Cubes$1 = function Cubes(props) {
         'div',
         a$5('CHILD', {
           style: {
-            backgroundColor: props.objectColor,
-            animationDuration: props.duration + 's',
-            animationDelay: props.duration / 2 * i / cubes.length + 's'
+            backgroundColor: objectColor,
+            animationDuration: duration + 's',
+            animationDelay: duration / 2 * i / cubes.length + 's'
           }
         })
       )
@@ -783,15 +774,12 @@ var ThreeBounce = function() {
     arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
 
   var parentSize = props.size || SIZE$8
-
   var childSize = parentSize / 4
-  var childMutable = {
-    style: {
-      width: childSize,
-      height: childSize,
-      animationDuration: (props.duration || DURATION$8) + 's',
-      backgroundColor: props.objectColor || OBJECT_COLOR$8
-    }
+  var childStyle = {
+    width: childSize,
+    height: childSize,
+    animationDuration: (props.duration || DURATION$8) + 's',
+    backgroundColor: props.objectColor || OBJECT_COLOR$8
   }
 
   return React.createElement(
@@ -803,9 +791,9 @@ var ThreeBounce = function() {
         backgroundColor: props.backgroundColor
       }
     }),
-    React.createElement('div', a$8('CHILD_FIRST', childMutable)),
-    React.createElement('div', a$8('CHILD_SECOND', childMutable)),
-    React.createElement('div', a$8('CHILD_THIRD', childMutable))
+    React.createElement('div', a$8('CHILD_FIRST', { style: childStyle })),
+    React.createElement('div', a$8('CHILD_SECOND', { style: childStyle })),
+    React.createElement('div', a$8('CHILD_THIRD', { style: childStyle }))
   )
 }
 
@@ -861,10 +849,15 @@ var WanderingCubes = function() {
     arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {}
 
   var parentSize = props.size || SIZE$9
-
-  var cubeSize = parentSize / 4
-  var animationName = createAnim(parentSize * 0.75)
   var duration = props.duration || DURATION$9
+  var cubeSize = parentSize / 4
+  var childPreStyle = {
+    animationName: createAnim(parentSize * 0.75),
+    animationDuration: duration + 's',
+    width: cubeSize,
+    height: cubeSize,
+    backgroundColor: props.objectColor || OBJECT_COLOR$9
+  }
 
   return React.createElement(
     'div',
@@ -878,27 +871,17 @@ var WanderingCubes = function() {
     React.createElement(
       'div',
       a$9('CHILD', {
-        style: {
-          animationName: animationName,
-          animationDuration: duration + 's',
-          animationDelay: duration + 's',
-          width: cubeSize,
-          height: cubeSize,
-          backgroundColor: props.objectColor || OBJECT_COLOR$9
-        }
+        style: Object.assign({}, childPreStyle, {
+          animationDelay: duration + 's'
+        })
       })
     ),
     React.createElement(
       'div',
       a$9('CHILD', {
-        style: {
-          animationName: animationName,
-          animationDuration: duration + 's',
-          animationDelay: duration / 2 + 's',
-          width: cubeSize,
-          height: cubeSize,
-          backgroundColor: props.objectColor || OBJECT_COLOR$9
-        }
+        style: Object.assign({}, childPreStyle, {
+          animationDelay: duration / 2 + 's'
+        })
       })
     )
   )
@@ -990,20 +973,23 @@ var WaveLoading = function() {
 var RECT_COUNT = 5
 var DELAY_RANGE = 0.4
 
-var Rects = function Rects(props) {
+var Rects = function Rects(_ref) {
+  var size = _ref.size,
+    objectColor = _ref.objectColor,
+    duration = _ref.duration
   return getRange(RECT_COUNT).map(function(index) {
     return React.createElement(
       'div',
       a$10('RECT', {
         key: index,
         style: {
-          width: props.size / 12,
-          marginRight: props.size / 24,
-          left: props.size / 24 / 2,
-          backgroundColor: props.objectColor,
-          animationDuration: props.duration + 's',
+          width: size / 12,
+          marginRight: size / 24,
+          left: size / 24 / 2,
+          backgroundColor: objectColor,
+          animationDuration: duration + 's',
           animationDelay:
-            DELAY_RANGE * index / (RECT_COUNT - 1) - props.duration + 's'
+            DELAY_RANGE * index / (RECT_COUNT - 1) - duration + 's'
         }
       })
     )

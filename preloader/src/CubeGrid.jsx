@@ -15,40 +15,33 @@ type Props = {
   duration?: number
 }
 
-export default (props: Props = {}) => (
-  <div
-    {...a('PARENT', {
-      style: {
-        width: props.size || SIZE,
-        height: props.size || SIZE,
-        backgroundColor: props.backgroundColor
-      }
-    })}
-  >
-    <Cubes
-      {...{
-        objectColor: props.objectColor || OBJECT_COLOR,
-        duration: props.duration || DURATION
-      }}
-    />
+export default (props: Props = {}) =>
+  <div {...a('PARENT', {
+    style: {
+      width: props.size || SIZE,
+      height: props.size || SIZE,
+      backgroundColor: props.backgroundColor
+    }
+  })}>
+    <Cubes {...{
+      objectColor: props.objectColor || OBJECT_COLOR,
+      duration: props.duration || DURATION
+    }} />
   </div>
-)
 
 const CUBES = [0.5, 0.75, 1, 0.25, 0.5, 0.75, 0, 0.25, 0.5]
 
 const Cubes = ({ objectColor, duration }) =>
-  CUBES.map((c, i) => (
-    <div
-      {...a('CUBE', {
-        key: i,
-        style: {
-          backgroundColor: objectColor,
-          animationDuration: `${duration}s`,
-          animationDelay: `${(duration - 3) / 3 * c}s`
-        }
-      })}
-    />
-  ))
+  CUBES.map((c, i) =>
+    <div {...a('CUBE', {
+      key: i,
+      style: {
+        backgroundColor: objectColor,
+        animationDuration: `${duration}s`,
+        animationDelay: `${(duration - 3) / 3 * c}s`
+      }
+    })} />
+  )
 
 const a = Atra({
   PARENT: {

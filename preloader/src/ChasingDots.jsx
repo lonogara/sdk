@@ -19,39 +19,27 @@ type Props = {
 export default (props: Props = {}) => {
   const duration = props.duration || DURATION
   return (
-    <div
-      {...a('PARENT', {
-        style: {
-          width: props.size || SIZE,
-          height: props.size || SIZE,
-          backgroundColor: props.backgroundColor
-        }
-      })}
-    >
-      <div
-        {...a('WRAP', {
+    <div {...a('PARENT', {
+      style: {
+        width: props.size || SIZE,
+        height: props.size || SIZE,
+        backgroundColor: props.backgroundColor
+      }
+    })}>
+      <div {...a('WRAP', { style: { animationDuration: `${duration}s` } })}>
+        <div {...a('CHILD_FIRST', {
           style: {
+            backgroundColor: props.objectColor || OBJECT_COLOR,
             animationDuration: `${duration}s`
           }
-        })}
-      >
-        <div
-          {...a('CHILD_FIRST', {
-            style: {
-              backgroundColor: props.objectColor || OBJECT_COLOR,
-              animationDuration: `${duration}s`
-            }
-          })}
-        />
-        <div
-          {...a('CHILD_SECOND', {
-            style: {
-              backgroundColor: props.objectColor || OBJECT_COLOR,
-              animationDuration: `${duration}s`,
-              animationDelay: `${-(duration / 2)}s`
-            }
-          })}
-        />
+        })} />
+        <div {...a('CHILD_SECOND', {
+          style: {
+            backgroundColor: props.objectColor || OBJECT_COLOR,
+            animationDuration: `${duration}s`,
+            animationDelay: `${-(duration / 2)}s`
+          }
+        })} />
       </div>
     </div>
   )

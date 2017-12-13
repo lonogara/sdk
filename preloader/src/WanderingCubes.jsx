@@ -19,45 +19,26 @@ type Props = {
 
 export default (props: Props = {}) => {
   const parentSize = props.size || SIZE
-
-  const cubeSize = parentSize / 4
-  const animationName = createAnim(parentSize * 0.75)
   const duration = props.duration || DURATION
+  const cubeSize = parentSize / 4
+  const childPreStyle = {
+    animationName: createAnim(parentSize * 0.75),
+    animationDuration: `${duration}s`,
+    width: cubeSize,
+    height: cubeSize,
+    backgroundColor: props.objectColor || OBJECT_COLOR
+  }
 
   return (
-    <div
-      {...a('PARENT', {
-        style: {
-          width: parentSize,
-          height: parentSize,
-          backgroundColor: props.backgroundColor
-        }
-      })}
-    >
-      <div
-        {...a('CHILD', {
-          style: {
-            animationName,
-            animationDuration: `${duration}s`,
-            animationDelay: `${duration}s`,
-            width: cubeSize,
-            height: cubeSize,
-            backgroundColor: props.objectColor || OBJECT_COLOR
-          }
-        })}
-      />
-      <div
-        {...a('CHILD', {
-          style: {
-            animationName,
-            animationDuration: `${duration}s`,
-            animationDelay: `${duration / 2}s`,
-            width: cubeSize,
-            height: cubeSize,
-            backgroundColor: props.objectColor || OBJECT_COLOR
-          }
-        })}
-      />
+    <div {...a('PARENT', {
+      style: {
+        width: parentSize,
+        height: parentSize,
+        backgroundColor: props.backgroundColor
+      }
+    })}>
+      <div {...a('CHILD', { style: Object.assign({}, childPreStyle, { animationDelay: `${duration}s` }) })} />
+      <div {...a('CHILD', { style: Object.assign({}, childPreStyle, { animationDelay: `${duration / 2}s` }) })} />
     </div>
   )
 }

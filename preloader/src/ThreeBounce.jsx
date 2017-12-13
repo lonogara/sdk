@@ -18,30 +18,25 @@ type Props = {
 
 export default (props: Props = {}) => {
   const parentSize = props.size || SIZE
-
   const childSize = parentSize / 4
-  const childMutable = {
-    style: {
-      width: childSize,
-      height: childSize,
-      animationDuration: `${props.duration || DURATION}s`,
-      backgroundColor: props.objectColor || OBJECT_COLOR
-    }
+  const childStyle = {
+    width: childSize,
+    height: childSize,
+    animationDuration: `${props.duration || DURATION}s`,
+    backgroundColor: props.objectColor || OBJECT_COLOR
   }
 
   return (
-    <div
-      {...a('PARENT', {
-        style: {
-          width: parentSize,
-          height: parentSize,
-          backgroundColor: props.backgroundColor
-        }
-      })}
-    >
-      <div {...a('CHILD_FIRST', childMutable)} />
-      <div {...a('CHILD_SECOND', childMutable)} />
-      <div {...a('CHILD_THIRD', childMutable)} />
+    <div {...a('PARENT', {
+      style: {
+        width: parentSize,
+        height: parentSize,
+        backgroundColor: props.backgroundColor
+      }
+    })}>
+      <div {...a('CHILD_FIRST', { style: childStyle })} />
+      <div {...a('CHILD_SECOND', { style: childStyle })} />
+      <div {...a('CHILD_THIRD', { style: childStyle })} />
     </div>
   )
 }

@@ -9,25 +9,14 @@ export default ({ choised, mainColor, subColor }) =>
         fill: choised ? mainColor : 'none'
       }
     })} />
-    <path {...a('path_1', {
-      style: {
-        stroke: choised ? subColor : mainColor,
-        strokeWidth: choised ? 9 : 12
-      }
-    })} />
+    <path {...a('path_1', { style: { stroke: choised ? subColor : mainColor } })} />
     <path {...a('path_2', {
       style: {
         fill: choised ? subColor : mainColor,
-        stroke: choised ? 'none' : mainColor,
-        strokeWidth: choised ? 0 : 5
+        stroke: choised ? subColor : mainColor
       }
     })} />
-    <path {...a('path_3', {
-      style: {
-        fill: mainColor,
-        stroke: mainColor
-      }
-    })} />
+    <path {...a('path_3', { style: { fill: mainColor, stroke: mainColor } })} />
   </svg>
 
 const a = Atra({
@@ -43,11 +32,15 @@ const a = Atra({
   path_1: {
     d: 'm 225,163 a 75,75 0 0 1 -75,75 75,75 0 0 1 -75,-75 75,75 0 0 1 75,-75 75,75 0 0 1 75,75 z',
     style: {
-      fill: 'none'
+      fill: 'none',
+      strokeWidth: 12
     }
   },
   path_2: {
-    d: 'M 268.12503,77.767872 A 14.642857,14.642857 0 0 1 253.48217,92.410729 14.642857,14.642857 0 0 1 238.83932,77.767872 14.642857,14.642857 0 0 1 253.48217,63.125015 14.642857,14.642857 0 0 1 268.12503,77.767872 Z'
+    d: 'M 268.12503,77.767872 A 14.642857,14.642857 0 0 1 253.48217,92.410729 14.642857,14.642857 0 0 1 238.83932,77.767872 14.642857,14.642857 0 0 1 253.48217,63.125015 14.642857,14.642857 0 0 1 268.12503,77.767872 Z',
+    style: {
+      strokeWidth: 5
+    }
   },
   path_3: {
     d: 'M 202.92173,10 210,30 90,30 96.74771,10 Z'

@@ -16,34 +16,27 @@ type Props = {
   duration?: number
 }
 
-export default (props: Props = {}) => (
-  <div
-    {...a('PARENT', {
+export default (props: Props = {}) =>
+  <div {...a('PARENT', {
+    style: {
+      width: props.size || SIZE,
+      height: props.size || SIZE,
+      backgroundColor: props.backgroundColor
+    }
+  })}>
+    <div {...a('CHILD_FIRST', {
       style: {
-        width: props.size || SIZE,
-        height: props.size || SIZE,
-        backgroundColor: props.backgroundColor
+        backgroundColor: props.objectColor || OBJECT_COLOR,
+        animationDuration: `${props.duration || DURATION}s`
       }
-    })}
-  >
-    <div
-      {...a('CHILD_FIRST', {
-        style: {
-          backgroundColor: props.objectColor || OBJECT_COLOR,
-          animationDuration: `${props.duration || DURATION}s`
-        }
-      })}
-    />
-    <div
-      {...a('CHILD_SECOND', {
-        style: {
-          backgroundColor: props.objectColor || OBJECT_COLOR,
-          animationDuration: `${props.duration || DURATION}s`
-        }
-      })}
-    />
+    })} />
+    <div {...a('CHILD_SECOND', {
+      style: {
+        backgroundColor: props.objectColor || OBJECT_COLOR,
+        animationDuration: `${props.duration || DURATION}s`
+      }
+    })} />
   </div>
-)
 
 const CHILD_STYLE = {
   position: 'absolute',

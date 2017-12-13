@@ -11,7 +11,7 @@ export default ({ choised, mainColor, subColor }) =>
     })} />
     <path {...a('path_1', {
       style: {
-        stroke: choised ? 'none' : mainColor,
+        stroke: choised ? subColor : mainColor,
         fill: choised ? subColor : mainColor
       }
     })} />

@@ -21,27 +21,18 @@ export default (props: Props = {}) => {
   const wrapSize = parentSize / Math.SQRT2 - 1
 
   return (
-    <div
-      {...a('PARENT', {
-        style: {
-          width: parentSize,
-          height: parentSize,
-          backgroundColor: props.backgroundColor
-        }
-      })}
-    >
-      <div
-        {...a('WRAP', {
-          style: {
-            width: wrapSize,
-            height: wrapSize
-          }
-        })}
-      >
-        <Cubes
-          duration={props.duration || DURATION}
-          objectColor={props.objectColor || OBJECT_COLOR}
-        />
+    <div {...a('PARENT', {
+      style: {
+        width: parentSize,
+        height: parentSize,
+        backgroundColor: props.backgroundColor
+      }
+    })}>
+      <div {...a('WRAP', { style: { width: wrapSize, height: wrapSize } })}>
+        <Cubes {...{
+          duration: props.duration || DURATION,
+          objectColor: props.objectColor || OBJECT_COLOR
+        }} />
       </div>
     </div>
   )
@@ -49,30 +40,26 @@ export default (props: Props = {}) => {
 
 const cubes = [0, 1, 3, 2]
 
-const Cubes = props =>
-  cubes.map(i => (
-    <div
-      {...a('CHILD_WRAP', {
-        key: i,
+const Cubes = ({ duration, objectColor }) =>
+  cubes.map(i =>
+    <div {...a('CHILD_WRAP', {
+      key: i,
+      style: {
+        transform: transform({
+          scale: '1.1',
+          rotateZ: `${90 * i}deg`
+        })
+      }
+    })}>
+      <div {...a('CHILD', {
         style: {
-          transform: transform({
-            scale: '1.1',
-            rotateZ: `${90 * i}deg`
-          })
+          backgroundColor: objectColor,
+          animationDuration: `${duration}s`,
+          animationDelay: `${duration / 2 * i / cubes.length}s`
         }
-      })}
-    >
-      <div
-        {...a('CHILD', {
-          style: {
-            backgroundColor: props.objectColor,
-            animationDuration: `${props.duration}s`,
-            animationDelay: `${props.duration / 2 * i / cubes.length}s`
-          }
-        })}
-      />
+      })} />
     </div>
-  ))
+  )
 
 // transform: `perspective(140px) rotateX(-180deg)`,
 const anim1 = {
