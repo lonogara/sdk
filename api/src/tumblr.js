@@ -5,38 +5,32 @@ import { fetchJson, validTotal, Query, iteratorToAsyncFn } from './util.js'
 const TIMEOUT = 5000
 const LIMIT_V2 = 20
 const LIMIT_V1 = 50
-const originV2 = 'https://api.tumblr.com'
+const origin = 'https://api.tumblr.com'
 const hrefV2 = (account, proxy) =>
-  `${proxy || originV2}/v2/blog/${account}.tumblr.com`
+  `${proxy || origin}/v2/blog/${account}.tumblr.com`
 const hrefV1 = account => `https://${account}.tumblr.com/api/read/json`
 const extractTotalV2 = res => res.response.total_posts
 const extractTotalV1 = res => res['posts-total']
-const fetchOpts = { mode: 'cors' }
 
 export const tumblrAvatar = (account, size) => {
-  throwStringData(account, 'account')
+  validAccount(account)
   return `${hrefV2(account)}/avatar/${size || 64}`
 }
 
-export const tumblrInfo = (account, api_key, proxy) =>
+export const tumblrInfo = (account, { api_key, proxy, init }) =>
   Promise.resolve()
-    .then(() => {
-      throwStringData(account, 'account')
-      throwStringData(api_key, 'api_key')
-    })
-    .then(() =>
-      fetchJson(`${hrefV2(account, proxy)}/info?api_key=${api_key}`, fetchOpts)
+    .then(() => validAccount(account))
+    .then(() => new Query(api_key && { api_key }).string())
+    .then(querystring =>
+      fetchJson(`${hrefV2(account, proxy)}/info?${querystring}`, init)
     )
 
-export const tumblrPosts = (account, api_key, query, proxy) =>
+export const tumblrPosts = (account, { query, proxy, init }) =>
   Promise.resolve()
-    .then(() => {
-      throwStringData(account, 'account')
-      throwStringData(api_key, 'api_key')
-    })
-    .then(() => new Query(query, { api_key }).string())
+    .then(() => validAccount(account))
+    .then(() => new Query(query).string())
     .then(querystring =>
-      fetchJson(`${hrefV2(account, proxy)}/posts?${querystring}`, fetchOpts)
+      fetchJson(`${hrefV2(account, proxy)}/posts?${querystring}`, init)
     )
 
 export const TumblrPosts = HoHoV2(IndexesZero)
@@ -48,14 +42,11 @@ export const TumblrPostsV1 = HoHoV1(IndexesZero)
 export const TumblrPostsRandomV1 = HoHoV1(IndexesRandom)
 
 function HoHoV2(Indexes) {
-  const HoV2 = ({ account, api_key, query, limit, proxy }) =>
+  const HoV2 = (account, { query, limit, proxy, init }) =>
     Promise.resolve()
-      .then(() => {
-        throwStringData(account, 'account')
-        throwStringData(api_key, 'api_key')
-      })
+      .then(() => validAccount(account))
       .then(() => ({
-        query: new Query(query, { api_key }),
+        query: new Query(query),
         path: `${hrefV2(account, proxy)}/posts`
       }))
       .then(({ query, path }) =>
@@ -75,7 +66,7 @@ function HoHoV2(Indexes) {
               offset: array[0],
               limit: array.length
             })
-            return fetchJson(`${path}?${querystring}`, fetchOpts)
+            return fetchJson(`${path}?${querystring}`, init)
           }
         )
 
@@ -86,11 +77,9 @@ function HoHoV2(Indexes) {
 }
 
 function HoHoV1(Indexes) {
-  const HoV1 = ({ account, query, limit, timeout }) =>
+  const HoV1 = (account, { query, limit, timeout }) =>
     Promise.resolve()
-      .then(() => {
-        throwStringData(account, 'account')
-      })
+      .then(() => validAccount(account))
       .then(() => ({
         query: new Query(query),
         path: hrefV1(account)
@@ -122,14 +111,14 @@ function HoHoV1(Indexes) {
   return HoV1
 }
 
-function throwStringData(target, name) {
+function validAccount(target) {
   if (!target) {
-    throw new Error(`lonogara-tool/api/tumblr require ${name}`)
+    throw new Error(`lonogara-tool/api/tumblr require account`)
   }
 
   if (typeof target !== 'string') {
     throw new TypeError(
-      `lonogara-tool/api/tumblr argument ${name} must be "string"`
+      `lonogara-tool/api/tumblr argument account must be "string"`
     )
   }
 }

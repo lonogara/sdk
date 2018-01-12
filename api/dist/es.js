@@ -138,9 +138,9 @@ var iteratorToAsyncFn = function iteratorToAsyncFn(iterator) {
 var TIMEOUT = 5000
 var LIMIT_V2 = 20
 var LIMIT_V1 = 50
-var originV2 = 'https://api.tumblr.com'
+var origin = 'https://api.tumblr.com'
 var hrefV2 = function hrefV2(account, proxy) {
-  return (proxy || originV2) + '/v2/blog/' + account + '.tumblr.com'
+  return (proxy || origin) + '/v2/blog/' + account + '.tumblr.com'
 }
 var hrefV1 = function hrefV1(account) {
   return 'https://' + account + '.tumblr.com/api/read/json'
@@ -151,41 +151,41 @@ var extractTotalV2 = function extractTotalV2(res) {
 var extractTotalV1 = function extractTotalV1(res) {
   return res['posts-total']
 }
-var fetchOpts = { mode: 'cors' }
 
 var tumblrAvatar = function tumblrAvatar(account, size) {
-  throwStringData(account, 'account')
+  validAccount(account)
   return hrefV2(account) + '/avatar/' + (size || 64)
 }
 
-var tumblrInfo = function tumblrInfo(account, api_key, proxy) {
+var tumblrInfo = function tumblrInfo(account, _ref) {
+  var api_key = _ref.api_key,
+    proxy = _ref.proxy,
+    init = _ref.init
   return Promise.resolve()
     .then(function() {
-      throwStringData(account, 'account')
-      throwStringData(api_key, 'api_key')
+      return validAccount(account)
     })
     .then(function() {
-      return fetchJson(
-        hrefV2(account, proxy) + '/info?api_key=' + api_key,
-        fetchOpts
-      )
+      return new Query(api_key && { api_key: api_key }).string()
+    })
+    .then(function(querystring) {
+      return fetchJson(hrefV2(account, proxy) + '/info?' + querystring, init)
     })
 }
 
-var tumblrPosts = function tumblrPosts(account, api_key, query, proxy) {
+var tumblrPosts = function tumblrPosts(account, _ref2) {
+  var query = _ref2.query,
+    proxy = _ref2.proxy,
+    init = _ref2.init
   return Promise.resolve()
     .then(function() {
-      throwStringData(account, 'account')
-      throwStringData(api_key, 'api_key')
+      return validAccount(account)
     })
     .then(function() {
-      return new Query(query, { api_key: api_key }).string()
+      return new Query(query).string()
     })
     .then(function(querystring) {
-      return fetchJson(
-        hrefV2(account, proxy) + '/posts?' + querystring,
-        fetchOpts
-      )
+      return fetchJson(hrefV2(account, proxy) + '/posts?' + querystring, init)
     })
 }
 
@@ -198,26 +198,24 @@ var TumblrPostsV1 = HoHoV1(IndexesZero)
 var TumblrPostsRandomV1 = HoHoV1(IndexesRandom)
 
 function HoHoV2(Indexes) {
-  var HoV2 = function HoV2(_ref) {
-    var account = _ref.account,
-      api_key = _ref.api_key,
-      query = _ref.query,
-      limit = _ref.limit,
-      proxy = _ref.proxy
+  var HoV2 = function HoV2(account, _ref3) {
+    var query = _ref3.query,
+      limit = _ref3.limit,
+      proxy = _ref3.proxy,
+      init = _ref3.init
     return Promise.resolve()
       .then(function() {
-        throwStringData(account, 'account')
-        throwStringData(api_key, 'api_key')
+        return validAccount(account)
       })
       .then(function() {
         return {
-          query: new Query(query, { api_key: api_key }),
+          query: new Query(query),
           path: hrefV2(account, proxy) + '/posts'
         }
       })
-      .then(function(_ref2) {
-        var query = _ref2.query,
-          path = _ref2.path
+      .then(function(_ref4) {
+        var query = _ref4.query,
+          path = _ref4.path
         return fetchJson(path + '?' + query.string({ limit: 1 }))
           .then(extractTotalV2)
           .then(validTotal)
@@ -225,10 +223,10 @@ function HoHoV2(Indexes) {
             return { total: total, query: query, path: path }
           })
       })
-      .then(function(_ref3) {
-        var total = _ref3.total,
-          query = _ref3.query,
-          path = _ref3.path
+      .then(function(_ref5) {
+        var total = _ref5.total,
+          query = _ref5.query,
+          path = _ref5.path
 
         var iterator = tiloop(
           new Indexes({
@@ -240,7 +238,7 @@ function HoHoV2(Indexes) {
               offset: array[0],
               limit: array.length
             })
-            return fetchJson(path + '?' + querystring, fetchOpts)
+            return fetchJson(path + '?' + querystring, init)
           }
         )
 
@@ -252,14 +250,13 @@ function HoHoV2(Indexes) {
 }
 
 function HoHoV1(Indexes) {
-  var HoV1 = function HoV1(_ref4) {
-    var account = _ref4.account,
-      query = _ref4.query,
-      limit = _ref4.limit,
-      timeout = _ref4.timeout
+  var HoV1 = function HoV1(account, _ref6) {
+    var query = _ref6.query,
+      limit = _ref6.limit,
+      timeout = _ref6.timeout
     return Promise.resolve()
       .then(function() {
-        throwStringData(account, 'account')
+        return validAccount(account)
       })
       .then(function() {
         return {
@@ -267,9 +264,9 @@ function HoHoV1(Indexes) {
           path: hrefV1(account)
         }
       })
-      .then(function(_ref5) {
-        var query = _ref5.query,
-          path = _ref5.path
+      .then(function(_ref7) {
+        var query = _ref7.query,
+          path = _ref7.path
         return jsonp(path + '?' + query.string({ num: 0 }), timeout || TIMEOUT)
           .then(extractTotalV1)
           .then(validTotal)
@@ -277,10 +274,10 @@ function HoHoV1(Indexes) {
             return { total: total, query: query, path: path }
           })
       })
-      .then(function(_ref6) {
-        var total = _ref6.total,
-          query = _ref6.query,
-          path = _ref6.path
+      .then(function(_ref8) {
+        var total = _ref8.total,
+          query = _ref8.query,
+          path = _ref8.path
 
         var iterator = tiloop(
           new Indexes({
@@ -303,14 +300,14 @@ function HoHoV1(Indexes) {
   return HoV1
 }
 
-function throwStringData(target, name) {
+function validAccount(target) {
   if (!target) {
-    throw new Error('lonogara-tool/api/tumblr require ' + name)
+    throw new Error('lonogara-tool/api/tumblr require account')
   }
 
   if (typeof target !== 'string') {
     throw new TypeError(
-      'lonogara-tool/api/tumblr argument ' + name + ' must be "string"'
+      'lonogara-tool/api/tumblr argument account must be "string"'
     )
   }
 }

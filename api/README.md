@@ -14,22 +14,20 @@ import {
 
 tumblrAvatar(account[, size])
 
-tumblrInfo(account, api_key[, proxy])
+tumblrInfo(account[, { api_key, proxy, init }])
 
-tumblrPosts(account, api_key[, query, proxy])
+tumblrPosts(account[, { query, proxy, init }])
 
-TumblrPosts({
-  account,
-  api_key,
+TumblrPosts(account[, {
   query,
   limit: 20,
-  proxy
-})
+  proxy,
+  init
+}])
 
-TumblrPostsV1({
-  account,
+TumblrPostsV1(account[, {
   query,
   limit: 50,
   timeout: 5000
-})
+}])
 ```
