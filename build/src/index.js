@@ -1,3 +1,3 @@
-import markdownToHtml from './markdownToHtml'
+import markdownToHtml from './markdownToHtml.js'
 
 export { markdownToHtml }

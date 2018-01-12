@@ -19,7 +19,7 @@ var align = _interopDefault(require('../../.packages/rehype-align'))
 
 var createElement = react.createElement
 
-var index = function(html) {
+var internalHtml = function(html) {
   var opts =
     arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {}
   return unified()
@@ -38,7 +38,7 @@ var index = function(html) {
 
 var createElement$1 = react.createElement
 
-var index$1 = function(html, components) {
+var externalHtml = function(html, components) {
   return unified()
     .use(html2hast, { fragment: true })
     .use(blank)
@@ -48,7 +48,7 @@ var index$1 = function(html, components) {
 
 var createElement$2 = react.createElement
 
-var index$2 = function(markdown, components) {
+var externalMarkdown = function(markdown, components) {
   return unified()
     .use(markdown2mdast, { commonmark: true })
     .use(mdast2hast, { allowDangerousHTML: true })
@@ -59,6 +59,6 @@ var index$2 = function(markdown, components) {
     .processSync(markdown).contents
 }
 
-exports.internalHtml = index
-exports.externalHtml = index$1
-exports.externalMarkdown = index$2
+exports.internalHtml = internalHtml
+exports.externalHtml = externalHtml
+exports.externalMarkdown = externalMarkdown

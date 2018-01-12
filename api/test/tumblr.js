@@ -1,9 +1,12 @@
 import assert from 'assert'
 import rewire from 'rewire'
 import sinon from 'sinon'
-import got from 'got'
+// import got from 'got'
 
-const tumblr = rewire('../src/tumblr.js')
+// const modules = rewire('../src/tumblr.js')
+// const gotToJson = (src) => got(src).then((res) => JSON.parse(res.body))
+// const _util = Object.assign({}, modules.__get__('_util'), { fetchJson: gotToJson })
+// const _jsonpSimple = gotToJson
 
 describe(`api: tumblr`, () => {
   it(`avatar`, () => {})

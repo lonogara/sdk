@@ -1,6 +1,22 @@
-import * as facebook from './facebook.js'
-import * as instagram from './instagram.js'
-import * as tumblr from './tumblr.js'
-import * as twitter from './twitter.js'
+import {} from './facebook.js'
+import {} from './instagram.js'
+import {
+  tumblrAvatar,
+  tumblrInfo,
+  tumblrPosts,
+  TumblrPosts,
+  TumblrPostsRandom,
+  TumblrPostsV1,
+  TumblrPostsRandomV1
+} from './tumblr.js'
+import {} from './twitter.js'
 
-export { facebook, instagram, tumblr, twitter }
+export {
+  tumblrAvatar,
+  tumblrInfo,
+  tumblrPosts,
+  TumblrPosts,
+  TumblrPostsRandom,
+  TumblrPostsV1,
+  TumblrPostsRandomV1
+}

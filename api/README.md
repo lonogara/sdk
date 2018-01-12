@@ -2,22 +2,31 @@
 
 ### tumblr
 ```js
-import { tumblr } from 'lonogara-tool/api'
+import {
+  tumblrAvatar,
+  tumblrInfo,
+  tumblrPosts,
+  TumblrPosts,
+  TumblrPostsRandom,
+  TumblrPostsV1,
+  TumblrPostsRandomV1
+} from 'lonogara-tool/api'
 
-tumblr.avatar(account[, size])
+tumblrAvatar(account[, size])
 
-tumblr.info(account, api_key)
+tumblrInfo(account, api_key[, proxy])
 
-tumblr.posts(account, api_key[, query])
+tumblrPosts(account, api_key[, query, proxy])
 
-tumblr.Posts({
+TumblrPosts({
   account,
   api_key,
   query,
-  limit: 20
+  limit: 20,
+  proxy
 })
 
-tumblr.PostsV1({
+TumblrPostsV1({
   account,
   query,
   limit: 50,

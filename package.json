@@ -11,7 +11,10 @@
     "singleQuote": true
   },
   "nyc": {
-    "require": ["babel-register", "jsdom-global/register"],
+    "require": [
+      "babel-register",
+      "jsdom-global/register"
+    ],
     "include": [
       "api/src",
       "build/src",
@@ -65,6 +68,7 @@
     "rehype-stringify": "^3.0.0",
     "remark-parse": "^4.0.0",
     "remark-rehype": "^3.0.0",
+    "tiloop": "https://github.com/kthjm/tiloop",
     "unified": "^6.1.6"
   },
   "devDependencies": {

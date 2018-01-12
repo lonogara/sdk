@@ -1,5 +1,5 @@
-import internalHtml from './internalHtml'
-import externalHtml from './externalHtml'
-import externalMarkdown from './externalMarkdown'
+import internalHtml from './internalHtml.js'
+import externalHtml from './externalHtml.js'
+import externalMarkdown from './externalMarkdown.js'
 
 export { internalHtml, externalHtml, externalMarkdown }

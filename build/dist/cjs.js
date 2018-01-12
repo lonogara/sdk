@@ -17,18 +17,18 @@ var hast2html = _interopDefault(require('rehype-stringify'))
 
 var processor = unified()
   .use(markdown2mdast, { commonmark: true })
-  .use(mdast2hast)
+  .use(mdast2hast, { allowDangerousHTML: true })
   .use(raw)
   .use(align)
   .use(blank)
   .use(minify)
   .use(hast2html)
 
-var index = function(markdown) {
+var markdownToHtml = function(markdown) {
   return processor.process(markdown).then(function(_ref) {
     var contents = _ref.contents
     return contents
   })
 }
 
-exports.markdownToHtml = index
+exports.markdownToHtml = markdownToHtml
