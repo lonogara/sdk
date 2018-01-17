@@ -4398,9 +4398,9 @@ through@2, through@^2.3.8, through@~2.3, through@~2.3.1:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
 
-tiloop@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/tiloop/-/tiloop-0.0.1.tgz#bb98bc47f1432f9c9ff955b4854e0b3ab13d286f"
+tiloop@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/tiloop/-/tiloop-0.0.3.tgz#6eb81d6f47d49e8ff7253a3e4de5fa214a0226fb"
   dependencies:
     regenerator-runtime "^0.11.1"
 
