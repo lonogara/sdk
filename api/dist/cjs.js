@@ -88,7 +88,9 @@ var fetchJson = function fetchJson(url, opts) {
 
 var validTotal = function validTotal(total) {
   if (typeof total !== 'number') {
-    throw new Error('')
+    throw new TypeError('lonogara-tool/api: total must be "number"')
+  } else if (total <= 0) {
+    throw new Error('lonogara-tool/api: total <= 0')
   }
   return total
 }
