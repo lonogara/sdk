@@ -1,3 +1,5 @@
+![](https://github.com/kthjm/ikc-lonogara/blob/master/src/single/rogo/opengraph.yellow.svg)
+
 # lonogara tool
 
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
