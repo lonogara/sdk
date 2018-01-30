@@ -10,7 +10,7 @@ import {
   TumblrPostsRandom,
   TumblrPostsV1,
   TumblrPostsRandomV1
-} from 'lonogara-tool/api'
+} from 'lonogara-sdk/api'
 
 tumblrAvatar(account[, size])
 

@@ -1,8 +1,8 @@
 {
-  "name": "lonogara-tool",
-  "version": "0.0.3",
+  "name": "lonogara-sdk",
+  "version": "0.0.4",
   "private": true,
-  "repository": "kthjm/lonogara-tool",
+  "repository": "kthjm/lonogara-sdk",
   "author": "kthjm <toxictoxer@gmail.com>",
   "main": "index.js",
   "prettier": {

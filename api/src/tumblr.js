@@ -113,12 +113,12 @@ function HoHoV1(Indexes) {
 
 function validAccount(target) {
   if (!target) {
-    throw new Error(`lonogara-tool/api/tumblr require account`)
+    throw new Error(`lonogara-sdk/api/tumblr require account`)
   }
 
   if (typeof target !== 'string') {
     throw new TypeError(
-      `lonogara-tool/api/tumblr argument account must be "string"`
+      `lonogara-sdk/api/tumblr argument account must be "string"`
     )
   }
 }
