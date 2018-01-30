@@ -1,4 +1,4 @@
-![](https://github.com/kthjm/ikc-lonogara/blob/master/src/single/rogo/opengraph.yellow.svg)
+![](https://github.com/kthjm/lonogara-ikc/blob/master/src/single/rogo/opengraph.yellow.svg)
 
 # lonogara tool
 
