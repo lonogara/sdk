@@ -1,4 +1,4 @@
-![](https://github.com/kthjm/lonogara-ikc/blob/master/src/single/rogo/opengraph.yellow.svg)
+![](https://i.gyazo.com/3a74206535199e07322a9ef8745fec47.png)
 
 # lonogara sdk ![GitHub release](https://img.shields.io/github/release/kthjm/lonogara-sdk.svg?style=flat-square) [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier) [![CircleCI](https://img.shields.io/circleci/project/github/kthjm/lonogara-sdk.svg?style=flat-square)](https://circleci.com/gh/kthjm/lonogara-sdk) [![Codecov](https://img.shields.io/codecov/c/github/kthjm/lonogara-sdk.svg?style=flat-square)](https://codecov.io/gh/kthjm/lonogara-sdk)
 
