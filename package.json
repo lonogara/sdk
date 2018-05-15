@@ -1,65 +1,30 @@
 {
   "name": "lonogara-sdk",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "private": true,
   "repository": "kthjm/lonogara-sdk",
   "author": "kthjm <toxictoxer@gmail.com>",
-  "main": "index.js",
-  "prettier": {
-    "tabWidth": 2,
-    "semi": false,
-    "singleQuote": true
-  },
   "nyc": {
     "require": [
       "babel-register",
       "jsdom-global/register"
     ],
-    "include": [
-      "api/src",
-      "build/src",
-      "button/src",
-      "preloader/src",
-      "toreact/src"
-    ],
     "sourceMap": false,
     "instrument": false
   },
   "scripts": {
-    "nycha": "cross-env NODE_ENV=TEST nyc mocha --recursive",
-    "test:api": "yarn nycha ./api/test",
-    "test:build": "yarn nycha ./build/test",
-    "test:button": "yarn nycha ./button/test",
-    "test:preloader": "yarn nycha ./preloader/test",
-    "test:toreact": "yarn nycha ./toreact/test",
-    "test:all": "yarn nycha ./api/test ./build/test ./button/test ./preloader/test ./toreact/test",
-    "prebuild": "yarn test:all",
-    "//prebuild": "run-s pretest test:all",
-    "bundle": "cross-env NODE_ENV=BUILD node",
-    "build:api": "yarn bundle api/rollup.config.js",
-    "build:build": "yarn bundle build/rollup.config.js",
-    "build:button": "yarn bundle button/rollup.config.js",
-    "build:preloader": "yarn bundle preloader/rollup.config.js",
-    "build:toreact": "yarn bundle toreact/rollup.config.js",
-    "build": "run-s build:api build:build build:button build:preloader build:toreact",
-    "test:require": "mocha ./test.js",
-    "format": "prettier --write **/*.js",
-    "postbuild": "run-s test:require format",
-    "//pretest": "flow",
-    "test": "run-s test:require test:all",
-    "posttest": "nyc report --reporter=lcov",
-    "coverage": "codecov",
-    "compile": "cross-env NODE_ENV=PACKAGE babel",
-    "package:align": "yarn compile .packages/rehype-align/es.js -o .packages/rehype-align/index.js",
-    "package:blank": "yarn compile .packages/rehype-blank/es.js -o .packages/rehype-blank/index.js",
-    "package": "run-p package:align package:blank"
+    "test": "cross-env NODE_ENV=TEST nyc mocha .test",
+    "prebuild": "yarn test",
+    "build": "cross-env NODE_ENV=BUILD rollup -c",
+    "coverage": "nyc report --reporter=lcov && codecov"
+  },
+  "peerDependencies": {
+    "react": "^16.0.0"
   },
   "dependencies": {
     "atra": "^1.1.2",
     "create-keyframes": "^1.0.1",
     "hast-util-select": "^1.0.1",
-    "jsonp-simple": "^0.0.5",
-    "regenerator-runtime": "^0.11.1",
     "rehype-img-as": "^0.0.7",
     "rehype-minify-whitespace": "^2.0.3",
     "rehype-parse": "^4.0.0",
@@ -67,45 +32,33 @@
     "rehype-react": "^3.0.2",
     "rehype-stringify": "^3.0.0",
     "remark-parse": "^4.0.0",
-    "remark-rehype": "^3.0.0",
-    "tiloop": "^0.0.3",
-    "unified": "^6.1.6"
+    "remark-rehype": "^3.0.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
+    "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-istanbul": "^4.1.5",
-    "babel-plugin-rewire": "^1.1.0",
     "babel-preset-env": "^1.6.1",
-    "babel-preset-es2015-rollup": "^3.0.0",
-    "babel-preset-flow": "^6.23.0",
     "babel-preset-power-assert": "^1.0.0",
     "babel-preset-react": "^6.24.1",
     "codecov": "^3.0.0",
     "cross-env": "^5.1.3",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "flow-bin": "^0.63.1",
-    "flow-typed": "^2.2.1",
-    "got": "^8.0.2",
     "jsdom": "^11.5.1",
     "jsdom-global": "^3.0.2",
     "mocha": "^4.1.0",
-    "npm-run-all": "^4.1.2",
     "nyc": "^11.4.1",
     "power-assert": "^1.4.4",
-    "prettier": "^1.10.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-test-renderer": "^16.2.0",
-    "rewire": "^3.0.2",
     "rollup": "^0.54.0",
+    "rollup-plugin-auto-external": "^1.2.0",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-flow": "^1.1.1",
-    "sinon": "^4.1.5"
-  },
-  "peerDependencies": {
-    "react": "^16.0.0"
+    "rollup-plugin-prettier": "^0.4.0",
+    "unified": "^7.0.0"
   }
 }

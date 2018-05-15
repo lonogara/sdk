@@ -1,5 +1,5 @@
 {
-  "main": "dist/cjs.js",
-  "jsnext:main": "dist/es.js",
-  "module": "dist/es.js"
+  "main": "cjs.js",
+  "module": "es.js",
+  "jsnext:main": "es.js"
 }

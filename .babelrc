@@ -2,26 +2,18 @@
   "env": {
     "TEST": {
       "presets": [
-        ["env", { "targets": { "node": "current" } }],
-        "flow",
-        "react"
+        "env",
+        "react",
+        "power-assert"
       ],
       "plugins": [
-        "istanbul",
-        "rewire",
-        ["espower", { "embedAst": true }],
-        "empower-assert"
+        "istanbul"
       ]
     },
     "BUILD": {
       "presets": [
-        "es2015-rollup",
+        ["env", { "modules": false }],
         "react"
-      ]
-    },
-    "PACKAGE": {
-      "presets": [
-        ["env", { "targets": { "browsers": ["last 2 versions"] } }]
       ]
     }
   }
