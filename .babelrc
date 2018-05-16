@@ -10,11 +10,14 @@
         "istanbul"
       ]
     },
-    "BUILD": {
+    "ROLLUP": {
       "presets": [
         ["env", { "modules": false }],
         "react"
       ]
+    },
+    "UNIFIED": {
+      "presets": ["env"]
     }
   }
 }

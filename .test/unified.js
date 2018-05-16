@@ -1,6 +1,9 @@
 import assert from 'assert'
 import unified from 'unified'
-import * as presets from '../.src/unified'
+import m2h from '../.src/unified/m2h.js'
+import ih2r from '../.src/unified/ih2r.js'
+import eh2r from '../.src/unified/eh2r.js'
+import em2r from '../.src/unified/em2r.js'
 
 const md = `
 # title
@@ -18,9 +21,9 @@ const html = `
 </div>
 `
 
-const test = (name, target) => () => unified().use(presets[name]()).process(target)
+const test = (preset, target) => () => unified().use(preset()).process(target)
 
-it(`m2h`, test('m2h', md))
-it(`ih2r`, test('ih2r', html))
-it(`eh2r`, test('eh2r', html))
-it(`em2r`, test('em2r', md))
+it(`m2h`, test(m2h, md))
+it(`ih2r`, test(ih2r, html))
+it(`eh2r`, test(eh2r, html))
+it(`em2r`, test(em2r, md))

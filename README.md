@@ -37,7 +37,7 @@ component that recieve `props.choised`.
 - `RotaingPlaneLoading`
 
 ### `lonogara-sdk/unified`
-- `m2h`
-- `ih2r`
-- `eh2r`
-- `em2r`
+- `/m2h`
+- `/ih2r`
+- `/eh2r`
+- `/em2r`

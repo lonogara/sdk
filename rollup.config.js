@@ -17,6 +17,5 @@ const Config = (name) => ({
 
 export default [
   Config('button'),
-  Config('preloader'),
-  Config('unified')
+  Config('preloader')
 ]
