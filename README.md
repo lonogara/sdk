@@ -1,8 +1,5 @@
-![](https://i.gyazo.com/3a74206535199e07322a9ef8745fec47.png)
-
-# lonogara-sdk
-![GitHub release](https://img.shields.io/github/release/kthjm/lonogara-sdk.svg?style=flat-square)
-[![CircleCI](https://img.shields.io/circleci/project/github/kthjm/lonogara-sdk.svg?style=flat-square)](https://circleci.com/gh/kthjm/lonogara-sdk) [![Codecov](https://img.shields.io/codecov/c/github/kthjm/lonogara-sdk.svg?style=flat-square)](https://codecov.io/gh/kthjm/lonogara-sdk)
+![GitHub release](https://img.shields.io/github/release/lonogara/sdk.svg?longCache=true&style=flat-square)
+[![CircleCI](https://img.shields.io/circleci/project/github/lonogara/sdk.svg?longCache=true&style=flat-square)](https://circleci.com/gh/lonogara/sdk) [![Codecov](https://img.shields.io/codecov/c/github/lonogara/sdk.svg?longCache=true&style=flat-square)](https://codecov.io/gh/lonogara/sdk)
 
 ### `lonogara-sdk/button`
 
