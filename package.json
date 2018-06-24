@@ -1,7 +1,6 @@
 {
   "name": "lonogara-sdk",
-  "version": "0.0.7",
-  "private": true,
+  "version": "0.0.8",
   "repository": "kthjm/lonogara-sdk",
   "author": "kthjm <toxictoxer@gmail.com>",
   "nyc": {
